@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partie III — Estimation de la Demande et des Besoins en Eau (2016–2026) — Province d'Ifrane</title>
+
+    <!-- Polices éditoriales (Fraunces + Plus Jakarta Sans + JetBrains Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+    <!-- MathJax (LaTeX) -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* =================================================================
+           STYLE ÉDITORIAL : FOND BLANC, ENCRE NOIRE, PC & TÉLÉPHONE
+           ================================================================= */
+        * { box-sizing: border-box; }
+        
+        html, body {
+            background-color: #ffffff;
+            color: #111111;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            padding: 28px 5vw 22px 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        /* =================================================================
+           DIAPOSITIVE 01 : TRANSITION SUR FOND BLEU CIEL
+           ================================================================= */
+        .slide-transition {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0c4a6e;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 2px solid #0284c7;
+        }
+        .slide-transition .slide-header {
+            border-bottom: 1.5px solid #0369a1;
+        }
+        .slide-transition .section-num,
+        .slide-transition .header-meta {
+            color: #0369a1;
+        }
+        .transition-center {
+            margin: auto 0;
+            padding: 46px 0 46px 32px;
+            border-left: 6px solid #0284c7;
+        }
+        .transition-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0369a1;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #0284c7;
+            padding: 5px 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .transition-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 50px;
+            font-weight: 700;
+            color: #082f49;
+            line-height: 1.14;
+            letter-spacing: -1px;
+            margin: 0 0 18px 0;
+            max-width: 980px;
+        }
+        .transition-sub {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px;
+            font-weight: 500;
+            color: #0369a1;
+            margin: 0;
+            max-width: 860px;
+        }
+        .slide-transition .slide-footer {
+            border-top: 1px solid #7dd3fc;
+            color: #0369a1;
+        }
+
+        /* En-tête minimaliste */
+        .slide-header {
+            border-bottom: 1.5px solid #111111;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .header-left { max-width: 78%; }
+        .section-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: #555555;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .section-num.tag-agri { color: #15803d; }
+        .section-num.tag-clim { color: #0369a1; }
+        .section-num.tag-aepi { color: #b91c1c; }
+        .section-num.tag-tour { color: #6d28d9; }
+
+        h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 26.5px;
+            font-weight: 600;
+            color: #111111;
+            margin: 0;
+            line-height: 1.18;
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14.5px;
+            font-weight: 400;
+            color: #444444;
+            margin: 4px 0 0 0;
+        }
+        .header-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: #444444;
+            text-align: right;
+            line-height: 1.45;
+        }
+
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 41% 55%;
+            gap: 4%;
+            flex: 1;
+            align-items: start;
+        }
+        .editorial-grid-equal {
+            display: grid;
+            grid-template-columns: 48% 48%;
+            gap: 4%;
+            flex: 1;
+            align-items: start;
+        }
+        .col-text { padding-right: 10px; }
+        .col-visual {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid #e5e5e5;
+            padding-left: 3.5%;
+        }
+
+        h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #111111;
+            margin: 0 0 8px 0;
+        }
+        p {
+            font-size: 14.3px;
+            line-height: 1.56;
+            color: #222222;
+            margin: 0 0 9px 0;
+        }
+        ul.clean-list {
+            margin: 0 0 11px 0;
+            padding-left: 18px;
+            font-size: 14.3px;
+            line-height: 1.56;
+            color: #222222;
+        }
+        ul.clean-list li { margin-bottom: 6.5px; }
+        ul.clean-list strong { color: #000000; font-weight: 700; }
+
+        .hl-red { color: #b91c1c; font-weight: 700; }
+        .hl-blue { color: #0369a1; font-weight: 700; }
+        .hl-green { color: #15803d; font-weight: 700; }
+        .hl-purple { color: #6d28d9; font-weight: 700; }
+
+        .status-pill {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .st-collecte { background: #e0f2fe; color: #0369a1; border: 1px solid #0369a1; }
+        .st-estime { background: #fef3c7; color: #b45309; border: 1px solid #b45309; }
+        .st-livre { background: #dcfce7; color: #15803d; border: 1px solid #15803d; }
+        .st-calcule { background: #fae8ff; color: #7e22ce; border: 1px solid #7e22ce; }
+
+        .math-block {
+            border-left: 2.5px solid #111111;
+            padding: 5px 0 5px 14px;
+            margin: 9px 0;
+            font-size: 13.5px;
+            overflow-x: auto;
+        }
+        .math-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444444;
+            margin-bottom: 3px;
+        }
+
+        .zoom-section {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-radius: 4px;
+        }
+        .zoom-section:hover { background-color: #f8fafc; }
+
+        .process-ribbon {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 8px 0 12px 0;
+        }
+        .proc-step {
+            border: 1px solid #111111;
+            padding: 8px 10px;
+            background: #ffffff;
+        }
+        .proc-step.done { border-top: 4px solid #15803d; }
+        .proc-step.bonus { border-top: 4px solid #7e22ce; background: #fdfaff; }
+        .proc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: #555555;
+        }
+        .proc-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+            margin: 3px 0;
+        }
+        .proc-desc {
+            font-size: 11.5px;
+            color: #333333;
+            line-height: 1.35;
+        }
+
+        .mega-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 8px 0 12px 0;
+            border-top: 2px solid #111111;
+            border-bottom: 2px solid #111111;
+            padding: 10px 0;
+        }
+        .mega-kpi-item {
+            border-left: 3.5px solid #111111;
+            padding-left: 12px;
+        }
+        .mega-kpi-item.accent { border-left-color: #b91c1c; }
+        .mega-kpi-item.green { border-left-color: #15803d; }
+        .mega-kpi-item.blue { border-left-color: #0369a1; }
+        .mega-kpi-num {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #111111;
+            line-height: 1.05;
+            letter-spacing: -1px;
+        }
+        .mega-kpi-item.accent .mega-kpi-num { color: #b91c1c; }
+        .mega-kpi-item.green .mega-kpi-num { color: #15803d; }
+        .mega-kpi-item.blue .mega-kpi-num { color: #0369a1; }
+        .mega-kpi-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #111111;
+            margin-top: 4px;
+        }
+        .mega-kpi-sub {
+            font-size: 11.5px;
+            color: #444444;
+            margin-top: 2px;
+        }
+
+        .canvas-stack {
+            position: relative;
+            height: 205px;
+            margin: 6px 0 10px 0;
+            border: 1px dashed #999999;
+            background: #fafafa;
+            padding: 10px;
+        }
+        .stack-card {
+            position: absolute;
+            width: 62%;
+            height: 148px;
+            border: 1.5px solid #111111;
+            background: #ffffff;
+            box-shadow: 4px 4px 0px #111111;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.25s ease, z-index 0.2s;
+        }
+        .stack-card:hover {
+            transform: scale(1.04) translateY(-4px);
+            z-index: 30 !important;
+        }
+        .stack-card img {
+            width: 100%;
+            height: 118px;
+            object-fit: cover;
+            display: block;
+        }
+        .stack-card .stack-lbl {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            background: #111111;
+            color: #ffffff;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .stack-1 { top: 8px; left: 2%; z-index: 10; }
+        .stack-2 { top: 24px; left: 19%; z-index: 15; }
+        .stack-3 { top: 40px; left: 36%; z-index: 20; }
+
+        .chart-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #111111;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        .chart-main-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: #111111;
+        }
+        .axis-badges {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 4px;
+            gap: 6px;
+        }
+        .axis-badge-left {
+            background: #f4f4f5;
+            border-left: 3px solid #111111;
+            padding: 2px 8px;
+        }
+        .axis-badge-right {
+            background: #fef2f2;
+            border-right: 3px solid #b91c1c;
+            color: #991b1b;
+            padding: 2px 8px;
+        }
+        .chart-surface {
+            width: 100%;
+            height: 375px;
+            background: transparent;
+        }
+        .axis-x-footer {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: #111111;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px dotted #cccccc;
+        }
+
+        figure.asset-figure {
+            margin: 0 0 10px 0;
+            position: relative;
+        }
+        figure.asset-figure img.zoomable {
+            width: 100%;
+            max-height: 162px;
+            object-fit: cover;
+            border: 1px solid #111111;
+            display: block;
+            cursor: zoom-in;
+            transition: opacity 0.2s ease;
+        }
+        figure.asset-figure img.zoomable.tall-map {
+            max-height: 350px;
+            object-fit: contain;
+            background: #fafafa;
+        }
+        figure.asset-figure img.zoomable:hover { opacity: 0.9; }
+        figure.asset-figure figcaption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: #444444;
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .zoom-hint {
+            font-size: 9.5px;
+            color: #111111;
+            border-bottom: 1px dotted #111111;
+            cursor: pointer;
+        }
+        .dual-assets {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        table.academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.6px;
+            margin: 5px 0 10px 0;
+            border-top: 2px solid #111111;
+            border-bottom: 2px solid #111111;
+        }
+        table.academic-table th {
+            text-align: left;
+            padding: 5.5px 7px;
+            border-bottom: 1px solid #111111;
+            font-weight: 700;
+            color: #111111;
+        }
+        table.academic-table td {
+            padding: 5px 7px;
+            border-bottom: 1px solid #e5e5e5;
+            color: #222222;
+            vertical-align: middle;
+        }
+
+        .org-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border: 1px solid #111111;
+        }
+        .org-abhs { background-color: #dbeafe; color: #1e3a8a; border-color: #1d4ed8; }
+        .org-hcp { background-color: #ede9fe; color: #4c1d95; border-color: #6d28d9; }
+        .org-dpa { background-color: #dcfce7; color: #14532d; border-color: #15803d; }
+        .org-onssa { background-color: #e0f2fe; color: #0c4a6e; border-color: #0369a1; }
+        .org-fao { background-color: #ffedd5; color: #7c2d12; border-color: #c2410c; }
+        .org-calc { background-color: #fef9c3; color: #713f12; border-color: #a16207; }
+
+        .metrics-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            border-top: 1px solid #111111;
+            padding-top: 9px;
+            margin-top: 9px;
+        }
+        .metric-item .val {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 23px;
+            font-weight: 700;
+            color: #111111;
+        }
+        .metric-item .lbl {
+            font-size: 11.5px;
+            color: #444444;
+            margin-top: 2px;
+        }
+
+        .step-chain {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .step-node {
+            border: 1px solid #111111;
+            padding: 7px;
+            background: #ffffff;
+        }
+        .step-node .s-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: #0369a1;
+        }
+        .step-node .s-title {
+            font-weight: 700;
+            font-size: 12px;
+            margin: 2px 0;
+        }
+        .step-node .s-desc {
+            font-size: 11px;
+            color: #444444;
+            line-height: 1.35;
+        }
+
+        .sector-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .sector-pill {
+            border: 1.5px solid #111111;
+            padding: 10px;
+        }
+        .sector-pill .sp-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .sector-pill h4 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 15.5px;
+            margin: 0 0 3px 0;
+        }
+        .sector-pill p {
+            font-size: 12px;
+            margin: 0;
+            color: #444444;
+        }
+
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #666666;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 7px;
+            margin-top: 6px;
+        }
+
+        .page-index {
+            position: fixed;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            z-index: 100;
+        }
+        .page-tick {
+            width: 8px;
+            height: 1.5px;
+            background: #bbbbbb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .page-tick.active {
+            width: 18px;
+            height: 2px;
+            background: #111111;
+        }
+
+        /* Lightbox Plein Écran */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.97);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            cursor: zoom-out;
+        }
+        .lightbox-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox-overlay img {
+            max-width: 92vw;
+            max-height: 82vh;
+            object-fit: contain;
+            border: 1.5px solid #111111;
+        }
+        .lightbox-html-content {
+            max-width: 90vw;
+            max-height: 82vh;
+            overflow-y: auto;
+            background: #ffffff;
+            border: 2px solid #111111;
+            padding: 28px;
+            box-shadow: 8px 8px 0px #111111;
+            display: none;
+        }
+        .lightbox-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #111111;
+            margin-top: 14px;
+            text-align: center;
+            max-width: 85vw;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #111111;
+            border: 1px solid #111111;
+            padding: 6px 12px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        /* =================================================================
+           ADAPTATION COMPLÈTE POUR TÉLÉPHONE & TABLETTE (RESPONSIVE)
+           ================================================================= */
+        @media (max-width: 960px) {
+            html, body {
+                scroll-snap-type: none;
+                height: auto;
+                overflow-y: auto;
+            }
+            .slide {
+                min-height: auto;
+                padding: 22px 4.5vw 20px 4.5vw;
+            }
+            .slide-transition {
+                min-height: 85vh;
+            }
+            .transition-title {
+                font-size: 32px;
+            }
+            .transition-sub {
+                font-size: 15px;
+            }
+            .slide-header {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .header-left { max-width: 100%; }
+            .header-meta {
+                text-align: left;
+                font-size: 10.5px;
+            }
+            h1 { font-size: 21px; }
+            h2 { font-size: 13px; }
+            .editorial-grid, .editorial-grid-equal {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .col-text { padding-right: 0; }
+            .col-visual {
+                border-left: none;
+                border-top: 1px solid #e5e5e5;
+                padding-left: 0;
+                padding-top: 14px;
+            }
+            .process-ribbon {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .sector-cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .step-chain {
+                grid-template-columns: 1fr 1fr;
+            }
+            .mega-kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .mega-kpi-num { font-size: 26px; }
+            .axis-badges {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .chart-surface {
+                height: 310px !important;
+            }
+            table.academic-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                font-size: 11.5px;
+            }
+            .canvas-stack {
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .stack-card {
+                position: relative;
+                top: auto !important;
+                left: auto !important;
+                width: 100%;
+                height: auto;
+            }
+            .dual-assets {
+                grid-template-columns: 1fr;
+            }
+            .slide-footer {
+                flex-direction: column;
+                gap: 4px;
+                font-size: 10px;
+            }
+            .page-index { display: none; }
+        }
+
+        @media (max-width: 520px) {
+            .sector-cards-grid, .step-chain {
+                grid-template-columns: 1fr;
+            }
+            .chart-surface {
+                height: 270px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close">FERMER [ÉCHAP]</button>
+        <img id="lightbox-img" src="" alt="Vue agrandie">
+        <div id="lightbox-html" class="lightbox-html-content"></div>
+        <div class="lightbox-caption" id="lightbox-cap"></div>
+    </div>
+
+    <div class="page-index" id="pageIndex"></div>
+
+    <!-- ================================================================= -->
+    <!-- 01. DIAPOSITIVE DE TRANSITION SUR FOND BLEU CIEL                  -->
+    <!-- ================================================================= -->
+    <section class="slide slide-transition" data-slide="0">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num">PROJET PILOTE STRATEAU • PROVINCE D'IFRANE</span>
+            </div>
+            <div class="header-meta">10 COMMUNES • 2016–2026</div>
+        </div>
+
+        <div class="transition-center">
+            <span class="transition-kicker">PARTIE III • TRANSITION</span>
+            <h1 class="transition-title">Estimation de la Demande et des Besoins en Eau par Secteur et par Commune</h1>
+            <p class="transition-sub">Agriculture, Élevage, Eau Potable, Industrie, Tertiaire et Tourisme (2016–2026)</p>
+        </div>
+
+        <div class="slide-footer">
+            <span>Modélisation de la Demande en Eau — Province d'Ifrane</span>
+            <span>01 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 02. DÉMARCHE GLOBALE, 6 SECTEURS & RÉFÉRENTIEL (ORDRE ABHS -> HCP)-->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="1">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num">02 / Méthodologie Générale & Référentiel des Sources (Cliquer sur un bloc pour l'agrandir)</span>
+                <h1>Du Travail Demandé à l’Estimation des Besoins : Quatre Statuts à Distinguer</h1>
+                <h2>Articulation commune aux 6 secteurs étudiés sur les 10 communes d'Ifrane (Campagnes 2016–17 à 2025–26)</h2>
+            </div>
+            <div class="header-meta">10 COMMUNES • 10 CAMPAGNES<br>CLIQUEZ SUR CHAQUE BLOC POUR ZOOMER</div>
+        </div>
+
+        <!-- BLOC 1 ZOOMABLE AU CLIC : LA DÉMARCHE GLOBALE -->
+        <div class="zoom-section" onclick="openHtmlLightbox(this, 'Démarche méthodologique commune sur les 10 campagnes (2016–2026)')">
+            <h3>1. Les étapes de notre démarche commune (Cliquer pour agrandir)</h3>
+            <div class="process-ribbon">
+                <div class="proc-step done">
+                    <div class="proc-num"><span class="status-pill st-collecte">1 · COLLECTÉ</span></div>
+                    <div class="proc-title">Recueil Multi-Sources</div>
+                    <div class="proc-desc"><strong>ABH du Sebou</strong>, <strong>HCP</strong>, <strong>DPA d'Ifrane</strong>, ONEE, PNI et sources spatiales (TerraClimate, FAO-56...).</div>
+                </div>
+                <div class="proc-step done">
+                    <div class="proc-num"><span class="status-pill st-estime">2 · ESTIMÉ</span></div>
+                    <div class="proc-title">Avant / Après (10 ans)</div>
+                    <div class="proc-desc">Passage de données ponctuelles brutes à une série continue sur 10 campagnes (2016–17 à 2025–26).</div>
+                </div>
+                <div class="proc-step done">
+                    <div class="proc-num"><span class="status-pill st-estime">2 · VENTILÉ</span></div>
+                    <div class="proc-title">Par Mois & Commune</div>
+                    <div class="proc-desc">Ventilation spatiale (10 communes) et temporelle (12 mois) selon des clés et hypothèses documentées.</div>
+                </div>
+                <div class="proc-step done">
+                    <div class="proc-num"><span class="status-pill st-livre">3 · LIVRÉ</span></div>
+                    <div class="proc-title">Canevas STRATEAU</div>
+                    <div class="proc-desc"><strong>Travail demandé accompli :</strong> Remplissage des feuilles Canevas STRATEAU (Agriculture & 4 secteurs AEPI).</div>
+                </div>
+                <div class="proc-step bonus">
+                    <div class="proc-num"><span class="status-pill st-calcule">4 · CALCULÉ PAR NOUS</span></div>
+                    <div class="proc-title">Besoins & Analyse</div>
+                    <div class="proc-desc">Calcul hors outil (Déterminant $\times$ Besoin unitaire) et analyse croisée par culture, secteur et commune.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="editorial-grid">
+            <!-- BLOC 2 ZOOMABLE AU CLIC : LES 6 SECTEURS (CHEPTEL LIMITÉ AUX 3 ESPÈCES OVINS, BOVINS, CAPRINS) -->
+            <div class="col-text zoom-section" onclick="openHtmlLightbox(this, 'Les 6 secteurs modélisés commune par commune (2016–2026)')">
+                <h3>2. Les 6 secteurs modélisés (Cliquer pour agrandir)</h3>
+                <div class="sector-cards-grid">
+                    <div class="sector-pill" style="border-left: 5px solid #15803d;">
+                        <span class="sp-tag org-dpa">1. Cultures</span>
+                        <h4>27 Cultures</h4>
+                        <p>15 espèces fruitières, céréales, légumineuses, maraîchage & fourrages.</p>
+                    </div>
+                    <div class="sector-pill" style="border-left: 5px solid #0369a1;">
+                        <span class="sp-tag org-onssa">2. Élevage (Cheptel)</span>
+                        <h4>627 010 Têtes</h4>
+                        <p><strong>Ovins, Bovins et Caprins</strong> ventilés par commune sur 10 ans.</p>
+                    </div>
+                    <div class="sector-pill" style="border-left: 5px solid #c2410c;">
+                        <span class="sp-tag org-fao">3. Hydroclimat</span>
+                        <h4>Pluie EBK & $ET_0$</h4>
+                        <p>16 stations (ABH Sebou, Oum Er-Rbia, DMN...) & 960 valeurs ETP.</p>
+                    </div>
+                    <div class="sector-pill" style="border-left: 5px solid #111111;">
+                        <span class="sp-tag org-abhs">4. Eau Potable (AEPI)</span>
+                        <h4>161 953 Habitants</h4>
+                        <p>Population urbaine/rurale et enveloppe AEPI du PDAIRE (7,64 Mm³).</p>
+                    </div>
+                    <div class="sector-pill" style="border-left: 5px solid #b91c1c;">
+                        <span class="sp-tag org-hcp">5. Industrie & Tertiaire</span>
+                        <h4>7 205 Emplois</h4>
+                        <p>6 482 emplois tertiaires et 723 emplois industriels raccordés.</p>
+                    </div>
+                    <div class="sector-pill" style="border-left: 5px solid #6d28d9;">
+                        <span class="sp-tag org-hcp">6. Tourisme Classé</span>
+                        <h4>279 591 Nuitées</h4>
+                        <p>Série HCP prolongée (+5,41 %/an) et ventilée par les lits PNI.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOC 3 ZOOMABLE AU CLIC : LE RÉFÉRENTIEL (ORDRE EXACT : ABHS -> HCP -> DPA -> AUTRES -> SPATIAL...) -->
+            <div class="col-visual zoom-section" onclick="openHtmlLightbox(this, 'Référentiel hiérarchisé des organismes sources')">
+                <h3>3. Référentiel des sources par ordre de mobilisation (Cliquer pour agrandir)</h3>
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Organisme Source</th>
+                            <th>Données recueillies, contrôlées et ventilées</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="org-tag org-abhs">1. ABH du Sebou (ABHS)</span></td>
+                            <td>Intermédiaire central : <strong>PDAIRE</strong> (volumes et dotations AEPI par horizon), séries des stations pluviométriques et ressources.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-hcp">2. HCP (Recensements)</span></td>
+                            <td>Population (RGPH 2014 & 2024), cartographie des établissements économiques (emplois 2023–24), annuaires (nuitées, céréales).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-dpa">3. DPA d'Ifrane</span></td>
+                            <td>Superficies communales (27 cultures), registres de plantations fruitières, effectifs du cheptel (2026), $K_c$ locaux et irrigation.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-onssa">4. ONEE & Parc National</span></td>
+                            <td>Production AEP ONEE (calage 2017–2019), normes unitaires ONEP/ONEE et capacité d'accueil en lits par commune (PNI).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-fao">5. Spatial & Autres (...)</span></td>
+                            <td>Séries satellitaires et grilles climatiques (<strong>TerraClimate ~4,6 km via GEE</strong>, stations ABH Oum Er-Rbia/Moulouya/Bouregreg, DMN, FAO-56, etc. <strong>...</strong>).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Partie III — Démarche Globale, Statuts des Données & Référentiel Multi-Organismes</span>
+            <span>02 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 03. VOLET 1 (AGRICULTURE & CHEPTEL) : UNIQUEMENT LES CANEVAS C_   -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="2">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">03 / Volet I — Agriculture & Élevage : Les Feuilles du Canevas STRATEAU Remplies</span>
+                <h1>Le Travail Demandé est Fait : Les Feuilles du Canevas STRATEAU Agricole Sont Remplies</h1>
+                <h2>Statistiques strictement limitées aux feuilles du gabarit STRATEAU (hors feuilles internes de calcul intermédiaire)</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-livre">LIVRÉ : CANEVAS STRATEAU</span><br>10 COMMUNES × 10 CAMPAGNES</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>Distinction stricte entre nos calculs intermédiaires et les Canevas STRATEAU livrés</h3>
+                <p>Conformément au gabarit officiel de STRATEAU, nos tables de préparation alimentent par formules les <strong>5 feuilles du Canevas Agricole</strong> (ainsi que 2 feuilles variantes recommandées pour isoler les superficies irriguées) et la matrice communale du <strong>Cheptel (Ovins, Bovins, Caprins)</strong> :</p>
+
+                <!-- CHIFFRES STRICTEMENT LIMITÉS AUX FEUILLES DU CANEVAS STRATEAU AGRICOLE (SANS LES FEUILLES INTERMÉDIAIRES !) -->
+                <div class="mega-kpi-grid">
+                    <div class="mega-kpi-item green">
+                        <div class="mega-kpi-num">5 Feuilles</div>
+                        <div class="mega-kpi-title">Gabarit STRATEAU</div>
+                        <div class="mega-kpi-sub">Feuil1 à Feuil5 (+ 2 variantes)</div>
+                    </div>
+                    <div class="mega-kpi-item accent">
+                        <div class="mega-kpi-num">6 460 Lignes</div>
+                        <div class="mega-kpi-title">Dans le Canevas Pur</div>
+                        <div class="mega-kpi-sub">9 560 lignes avec variante irrig.</div>
+                    </div>
+                    <div class="mega-kpi-item">
+                        <div class="mega-kpi-num">47 877</div>
+                        <div class="mega-kpi-title">Valeurs Canevas</div>
+                        <div class="mega-kpi-sub">74 377 valeurs avec variante</div>
+                    </div>
+                </div>
+
+                <!-- CASCADE VISUELLE DES PRINTSCREENS DES FEUILLES CANEVAS C_ UNIQUEMENT -->
+                <div class="canvas-stack">
+                    <div class="stack-card stack-1" onclick="openDirectLightbox('assets/capture_canevas_strateau.png', 'Canevas STRATEAU C_Feuil1_Determinants : 2 000 lignes et 14 000 valeurs (Superficies par culture, 10 communes × 10 campagnes)')">
+                        <img src="assets/capture_canevas_strateau.png" alt="Canevas C_Feuil1_Determinants" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl"><span>1. C_Feuil1_Determinants (2 000 lignes)</span><span>[Zoom]</span></div>
+                    </div>
+                    <div class="stack-card stack-2" onclick="openDirectLightbox('assets/capture_arborescence_cultures.png', 'Canevas STRATEAU C_Feuil4_Irrigation (1 200 lignes : modes et efficiences) & C_Feuil2_Parametres (20 lignes : Kc et stades)')">
+                        <img src="assets/capture_arborescence_cultures.png" alt="Canevas C_Feuil4_Irrigation" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl" style="background:#0369a1;"><span>2. C_Feuil4_Irrigation (1 200 lignes)</span><span>[Zoom]</span></div>
+                    </div>
+                    <div class="stack-card stack-3" onclick="openDirectLightbox('assets/capture_sources_organismes.png', 'Canevas STRATEAU C_Feuil5_Satisfaction : 2 280 lignes et 13 680 valeurs (Taux de satisfaction mensuels par culture)')">
+                        <img src="assets/capture_sources_organismes.png" alt="Canevas C_Feuil5_Satisfaction" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl" style="background:#15803d;"><span>3. C_Feuil5_Satisfaction (2 280 lignes)</span><span>[Zoom]</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Détail exact des lignes et des valeurs renseignées dans chaque feuille du Canevas Agricole</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Lignes Renseignées dans le Canevas</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe Rouge) : Valeurs du Canevas</span>
+                    </div>
+                    <div id="chart-effort-canevas" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les Feuilles Officielles du Canevas STRATEAU Agricole & Cheptel (Hors Calculs Internes)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Bilan Exclusif des Feuilles du Canevas STRATEAU Remplies</span>
+            <span>03 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 04. MÉTHODOLOGIE DE CALCUL DES BESOINS EN PREMIER (FAO-56)        -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="3">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">04 / Volet I — Méthodologie de Calcul des Besoins Agricoles et Pastoraux</span>
+                <h1>Du Climat au Volume Prélevé : Formulation Analytique (Méthode FAO-56)</h1>
+                <h2>STRATEAU n'ayant pas pu être exécuté, calcul hors outil des besoins nets et bruts à partir des canevas</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-calcule">CALCULÉ PAR NOUS</span><br>PAS DE TEMPS MENSUEL</div>
+        </div>
+
+        <div class="editorial-grid-equal">
+            <div class="col-text">
+                <h3>1. Chaîne de calcul des besoins d'irrigation ($I_{\text{net}}$ et $V_{\text{brut}}$)</h3>
+                <p>Pour chaque commune $c \in [1..10]$, culture $i \in [1..27]$ et mois $m \in [1..12]$, le besoin hydrique est évalué selon la méthode du coefficient cultural de la FAO (Bulletin FAO-56) :</p>
+
+                <div class="math-block">
+                    <div class="math-label">Étape 1 — Évapotranspiration maximale de la plante ($ET_c$, en mm/mois)</div>
+                    $$ET_{c(i,m)} = K_{c(i,m)} \times ET_{0(c,m)}$$
+                </div>
+
+                <div class="math-block">
+                    <div class="math-label">Étape 2 — Pluie efficace (Formule USDA-SCS) et Besoin Net ($I_{n(i,m)}$)</div>
+                    $$P_{\text{eff}(m)} = \begin{cases} P_m \times \dfrac{125 - 0{,}2 P_m}{125} & \text{si } P_m \le 250\text{ mm} \\[6pt] 125 + 0{,}1 P_m & \text{si } P_m > 250\text{ mm} \end{cases}$$
+                    $$I_{n(i,m)} = \max\left(0 \; ; \; ET_{c(i,m)} - P_{\text{eff}(c,m)}\right)$$
+                </div>
+
+                <div class="math-block">
+                    <div class="math-label">Étape 3 — Efficience parcellaire pondérée ($\eta_{\text{glob}}$) et Volume Brut ($m^3/\text{mois}$)</div>
+                    $$\eta_{\text{glob}} = \left[ (0{,}90 \times 0{,}90) + (0{,}00 \times 0{,}85) + (0{,}10 \times 0{,}70) \right] \times (1 - \tau_{\text{fuite}}) = 0{,}88 \text{ (88 \%)}$$
+                    $$V_{\text{irrig}(c,m)} = \sum_{i=1}^{27} \left[ S_{c,i} \times \tau_{\text{irrig}(c,i)} \times \frac{10 \times I_{n(i,m)}}{\eta_{\text{glob}}} \times \tau_{\text{sat}(i,m)} \right]$$
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <figure class="asset-figure">
+                    <img class="zoomable" src="assets/schema_bilan_fao56.png" alt="Fig 4.1 — Chaîne complète du bilan hydrique par mois et culture par culture : Climat (ET0, Pluie) -> ETM -> Besoin net -> Satisfaction (50 % été) -> Efficience (88 %) -> Prélèvement brut" onerror="this.src='https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 4.1 — Chaîne physique du bilan d'eau mensuel à la parcelle (FAO-56)</span><span class="zoom-hint">[Agrandir]</span></figcaption>
+                </figure>
+
+                <h3>2. Reconstitution historique et Demande pastorale ($V_{\text{cheptel}}$)</h3>
+                <div class="math-block">
+                    <div class="math-label">Étape 4 — Reconstitution arboricole à rebours (2016–2022)</div>
+                    $$S_{i, t} = S_{i, t+1} - \Delta P_{i, t+1} \quad \text{(soustraction des plantations annuelles)}$$
+                </div>
+
+                <div class="math-block">
+                    <div class="math-label">Étape 5 — Spatialisation des 3 espèces de ruminants (Ovins, Bovins, Caprins)</div>
+                    $$E_{c,a,t} = E_{\text{prov}(a,t)} \times \left( \frac{E_{c,a,2026}}{\sum_{c=1}^{10} E_{c,a,2026}} \right) \quad \Longrightarrow \quad V_{\text{cheptel}(c,t)} = \sum_{a=1}^{3} \left( E_{c,a,t} \times D_{a} \right)$$
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Méthodologie de Calcul FAO-56</span>
+            <span>04 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 05. (FARAH 1/2) ÉTUDE HYDROCLIMATIQUE : 16 STATIONS & KRIGEAGE EBK-->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="4">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-clim">05 / Étude Hydroclimatique (1/2) : Spatialisation des Précipitations (2017–2024)</span>
+                <h1>Réseau des 16 Stations Multi-Bassins et Krigeage Bayésien Empirique (EBK)</h1>
+                <h2>Consolidation des stations (ABH Sebou, Oum Er-Rbia, Moulouya, Bouregreg + DMN Ifrane) et cartographie mensuelle</h2>
+            </div>
+            <div class="header-meta">16 STATIONS • 2017–2024<br>MÉTHODE GÉOSTATISTIQUE EBK</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Un réseau étendu à 16 stations autour de la province d'Ifrane</h3>
+                <p>Pour éviter tout effet de bord sur le relief du Moyen Atlas, nous avons mobilisé un réseau de <span class="hl-blue">16 stations pluviométriques</span> entourant la province :</p>
+                <ul class="clean-list">
+                    <li><strong>Répartition par bassin :</strong> <span class="hl-blue">7 stations de l'ABH du Sebou</span>, <span class="hl-green">2 stations de l'ABH de l'Oum Er-Rbia</span> au sud, stations limitrophes de la <strong>Moulouya</strong> et du <strong>Bouregreg</strong>, plus la <span class="hl-red">station DMN d'Ifrane</span>.</li>
+                    <li><strong>Pourquoi la station d'Ifrane est décisive :</strong> Absente du réseau initial, son ajout après détection d'un écart avec les cartes de référence de l'ABHS a permis de représenter fidèlement les zones fortement arrosées du causse.</li>
+                </ul>
+
+                <div class="step-chain">
+                    <div class="step-node">
+                        <div class="s-num">01 • 16 STATIONS</div>
+                        <div class="s-title">4 ABH & DMN</div>
+                        <div class="s-desc">Séries 2017–2024 contrôlées & comblées</div>
+                    </div>
+                    <div class="step-node">
+                        <div class="s-num">02 • PRÉPARATION</div>
+                        <div class="s-title">Géoréférencement</div>
+                        <div class="s-desc">Séries mensuelles multi-bassins</div>
+                    </div>
+                    <div class="step-node">
+                        <div class="s-num">03 • KRIGEAGE EBK</div>
+                        <div class="s-title">Bayésien Empirique</div>
+                        <div class="s-desc">Dépendance spatiale & incertitude</div>
+                    </div>
+                    <div class="step-node">
+                        <div class="s-num">04 • RÉSULTATS</div>
+                        <div class="s-title">Pluie / Commune</div>
+                        <div class="s-desc">12 cartes & moyennes communales</div>
+                    </div>
+                </div>
+
+                <h3>2. Pourquoi l'EBK plutôt que l'IDW ?</h3>
+                <p>Contrairement à l'<strong>IDW</strong> (basé uniquement sur la distance géométrique), l'<strong>EBK (Empirical Bayesian Kriging)</strong> intègre la dépendance spatiale par variogrammes et estime l'incertitude.</p>
+            </div>
+
+            <div class="col-visual">
+                <figure class="asset-figure" style="margin-bottom:0;">
+                    <img class="zoomable tall-map" src="assets/carte_pluie_farah.png" alt="Fig 5.1 — Répartition spatiale des précipitations mensuelles dans la zone d'Ifrane (2017–2024) et réseau des 16 stations (Krigeage Bayésien Empirique EBK)" onerror="this.src='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 5.1 — Cartographie mensuelle des pluies (2017–2024) et réseau des 16 stations (Krigeage EBK)</span><span class="zoom-hint">[Cliquer pour agrandir les 12 cartes]</span></figcaption>
+                </figure>
+
+                <div class="math-block" style="margin-top:10px;">
+                    <div class="math-label">Alimentation directe du Canevas (Feuil3_Climat : 960 lignes)</div>
+                    Les lames d'eau mensuelles krigées (EBK) sur chacune des 10 communes sont converties en pluie efficace $P_{\text{eff}}$ (USDA-SCS) dans le modèle FAO-56.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Étude Hydroclimatique (Farah Zair) — Réseau de 16 Stations Multi-Bassins & Krigeage EBK</span>
+            <span>05 / 19</span>
+        </div>
+    </section>
+<!-- ================================================================= -->
+    <!-- 06. (FARAH 2/2) COURBES ET0 GÉNÉRÉES DIRECTEMENT DEPUIS SA DATA   -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="5">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-clim">06 / Étude Hydroclimatique (2/2) : Évapotranspiration Potentielle ($ET_0$)</span>
+                <h1>Pourquoi Retenir TerraClimate Plutôt que WaPOR ? Courbes des 960 Valeurs d’$ET_0$</h1>
+                <h2>Visualisation directe des 10 courbes mensuelles moyennes (2017–2024) extraites via Google Earth Engine</h2>
+            </div>
+            <div class="header-meta">10 COMMUNES × 12 MOIS × 8 ANS<br>= 960 VALEURS D'ET0</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Arbitrage méthodologique : TerraClimate vs WaPOR v3</h3>
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Critère technique</th>
+                            <th>WaPOR v3 (Écarté)</th>
+                            <th>TerraClimate (Retenu)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Résolution spatiale</strong></td>
+                            <td>~19 km (trop grossière)</td>
+                            <td><span class="hl-blue">~4,6 km (adaptée aux communes)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Couverture temporelle</strong></td>
+                            <td>Disponible seulement dès 2018</td>
+                            <td><span class="hl-green">Complète : 2017–2024 (8 ans)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualité de la série</strong></td>
+                            <td>Validation locale insuffisante</td>
+                            <td><strong>960 valeurs (0 donnée manquante)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>2. Analyse des 10 courbes communales d'$ET_0$ (Data TerraClimate)</h3>
+                <ul class="clean-list">
+                    <li><strong>Cycle saisonnier en cloche sur les 10 communes :</strong> Le graphique interactif ci-contre trace directement les valeurs mensuelles moyennes (2017–2024) issues du fichier de Farah (`ET0_TerraClimate_Ifrane_2017_2024`).</li>
+                    <li><strong>Minimum hivernal (Janvier & Décembre) :</strong> De <span class="hl-blue">35,18 mm à Timahdite</span> (en janvier) jusqu'à <strong>50,52 mm à Tigrigra</strong> et <strong>50,37 mm à Azrou</strong>.</li>
+                    <li><strong>Pic estival absolu en Juillet :</strong> Les communes de piémont et de moyenne altitude culminent à <span class="hl-red">222,66 mm à Tigrigra</span>, <span class="hl-red">219,72 mm à Azrou</span> et <strong>218,63 mm à Tizguite</strong>, contre <span class="hl-green">203,62 mm à Timahdite</span> et <strong>207,11 mm à Dayat Aoua</strong> en haute altitude.</li>
+                </ul>
+
+                <div class="metrics-strip">
+                    <div class="metric-item">
+                        <div class="val" style="color:#0369a1;">960</div>
+                        <div class="lbl">Valeurs Mensuelles ($10\times 12\times 8$)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#b91c1c;">222,7 mm</div>
+                        <div class="lbl">Pic Juillet (Tigrigra)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#15803d;">35,2 mm</div>
+                        <div class="lbl">Creux Janvier (Timahdite)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Évolution mensuelle moyenne de l'ET0 par commune (2017–2024, Data TerraClimate)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (10 Courbes Communales) : Évapotranspiration ET0 (mm/mois)</span>
+                        <span class="axis-badge-right">▲ PIC ESTIVAL : Juillet (203,6 à 222,7 mm)</span>
+                    </div>
+                    <div id="chart-farah-etp" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 12 Mois de l'Année (Moyenne Interannuelle 2017–2024 sur les 10 Communes)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Étude Hydroclimatique (Farah Zair) — Courbes Mensuelles d'ET0 des 10 Communes (TerraClimate)</span>
+            <span>06 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 07. ANALYSE INTER-ANNUELLE (2016-2026) & INTER-COMMUNALE SURFACES -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="6">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">07 / Analyse Spatio-Temporelle des Surfaces (2016–2026)</span>
+                <h1>Dynamique Inter-Annuelle des Filières et Répartition entre les Communes</h1>
+                <h2>Évolution comparée des grandes cultures pluviales face à l'essor continu des périmètres irrigués</h2>
+            </div>
+            <div class="header-meta">ANALYSE 2016–2026<br>CROISEMENT PLUVIAL / IRRIGUÉ</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <figure class="asset-figure">
+                    <img class="zoomable" src="assets/capture_arborescence_cultures.png" alt="Fig 7.1 — Extrait du fichier Cultures_Ifrane_2016-2026 détaillant les 27 cultures sur les 10 communes" onerror="this.src='https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 7.1 — Base des 27 cultures individualisées</span><span class="zoom-hint">[Agrandir]</span></figcaption>
+                </figure>
+
+                <h3>Constats majeurs de l'analyse inter-annuelle (2016–2026)</h3>
+                <ul class="clean-list">
+                    <li><strong>Divergence entre Pluvial et Irrigué :</strong> Le graphique multi-variables ci-contre croise sur 10 ans les surfaces pluviales (barres) et l'expansion des cultures irriguées (courbes). Alors que les <strong>Céréales</strong> fluctuent selon la pluviométrie (de 44 200 ha à <span class="hl-blue">31 943 ha</span>), le périmètre irrigué progresse chaque année.</li>
+                    <li><strong>Croissance structurelle de l'Arboriculture (15 espèces) :</strong> En séparant les 15 espèces fruitières (abandon du terme générique « Verger »), on observe que le <strong>Pommier</strong> gagne <span class="hl-green">+1 059 ha</span> (de 5 550 ha à <span class="hl-green">6 609 ha</span>), le <strong>Prunier + Cerisier</strong> atteignent <span class="hl-red">3 105 ha</span>, et le <strong>Maraîchage</strong> monte à <span class="hl-blue">1 482 ha</span>.</li>
+                    <li><strong>Concentration spatiale :</strong> Quatre communes regroupent 76 % des terres cultivées totales : <strong>Sidi El Makhfi (18 424 ha)</strong>, <strong>Tigrigra (14 388 ha)</strong>, <strong>Timahdite (12 204 ha)</strong> et <strong>Oued Ifrane (9 972 ha)</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Évolution croisée : Grandes Cultures (Axe G) vs Filières Irriguées (Axe D)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Grandes Cultures & Fourrages (ha)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Pommier, Rosacées & Maraîchage (ha)</span>
+                    </div>
+                    <div id="chart-surfaces-croise" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Campagnes Agricoles Décennales (2016–2017 à 2025–2026)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Analyse Inter-Annuelle des Surfaces</span>
+            <span>07 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 08. QUELLES CULTURES CONSOMMENT LE PLUS D'EAU ? (SURFACE vs EAU)  -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="7">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">08 / Hiérarchie des Cultures Consommatrices d'Eau</span>
+                <h1>Quelles Cultures Consomment le Plus d'Eau dans la Province d'Ifrane ?</h1>
+                <h2>Croisement multi-critères : Surface irriguée (ha), Besoin unitaire par hectare ($m^3/\text{ha}$) et Volume total ($Mm^3/\text{an}$)</h2>
+            </div>
+            <div class="header-meta">ANALYSE PAR CULTURE<br>27 CULTURES ÉVALUÉES</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>Distinction entre consommation totale et voracité à l'hectare</h3>
+                <ul class="clean-list">
+                    <li><strong>1. En volume total provincial ($Mm^3/\text{an}$) :</strong> Le <strong>Pommier</strong> est de loin le premier consommateur d'eau d'Ifrane avec <span class="hl-red">26,89 Mm³/an nets</span> (<strong>34,60 Mm³ bruts</strong>, soit <strong>41,2 %</strong> de toute l'eau d'irrigation de la province), suivi de la <strong>Pomme de terre (6,54 Mm³ nets)</strong>, du <strong>Prunier (6,01 Mm³)</strong> et du <strong>Maïs (5,41 Mm³)</strong>.</li>
+                    <li><strong>2. En intensité par hectare ($m^3/\text{ha/an}$) :</strong> La courbe rouge révèle que ce sont les cultures d'été à cycle intensif qui boivent le plus par hectare : la <span class="hl-red">Pomme de terre (9 080 m³/ha)</span>, l'<span class="hl-red">Oignon (8 690 m³/ha)</span> et le <strong>Pêcher/Nectarine (5 260 m³/ha)</strong> dépassent l'intensité unitaire du Pommier (4 070 m³/ha) et de l'Olivier (2 480 m³/ha).</li>
+                </ul>
+
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Rang & Culture Irriguée</th>
+                            <th>Surface (ha)</th>
+                            <th>Intensité ($m^3/\text{ha}$)</th>
+                            <th>Besoin Net ($Mm^3$)</th>
+                            <th>Besoin Brut ($Mm^3$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1. Pommier</strong></td><td>6 609 ha</td><td>4 070 m³/ha</td><td><span class="hl-red">26,89 Mm³</span></td><td>34,60 Mm³</td></tr>
+                        <tr><td><strong>2. Pomme de terre</strong></td><td>720 ha</td><td><span class="hl-red">9 080 m³/ha</span></td><td><strong>6,54 Mm³</strong></td><td>8,58 Mm³</td></tr>
+                        <tr><td><strong>3. Prunier</strong></td><td>1 741 ha</td><td>3 450 m³/ha</td><td><strong>6,01 Mm³</strong></td><td>7,73 Mm³</td></tr>
+                        <tr><td><strong>4. Maïs irrigué</strong></td><td>1 144 ha</td><td>4 730 m³/ha</td><td><strong>5,41 Mm³</strong></td><td>7,58 Mm³</td></tr>
+                        <tr><td><strong>5. Cerisier</strong></td><td>1 364 ha</td><td>3 440 m³/ha</td><td><strong>4,69 Mm³</strong></td><td>6,03 Mm³</td></tr>
+                        <tr><td><strong>6. Oignon</strong></td><td>476 ha</td><td><span class="hl-red">8 690 m³/ha</span></td><td><strong>4,14 Mm³</strong></td><td>5,43 Mm³</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Top 10 des Cultures : Volume Consommé (Mm³) vs Intensité par Hectare (m³/ha)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Volume Net & Brut Consommé (Mm³/an)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe Rouge) : Consommation Unitaire (m³/ha/an)</span>
+                    </div>
+                    <div id="chart-top-cultures" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Cultures Irriguées les Plus Consommatrices d'Eau à Ifrane</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Classement des Cultures Consommatrices</span>
+            <span>08 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 09. CROISEMENT CLIMAT (ET0, PLUIE) & PARAMÈTRES Kc (FOURRAGES)    -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="8">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">09 / Dynamique Bioclimatique & Calendriers Culturaux ($K_c$)</span>
+                <h1>Ciseau Climatique ($ET_0$ vs $P_{\text{eff}}$) et Impact du Calendrier des Fourrages</h1>
+                <h2>Superposition mensuelle du déficit climatique et des besoins des plantes : pourquoi l'ancrage DPA évite un biais majeur</h2>
+            </div>
+            <div class="header-meta">TERRACLIMATE & DPA<br>ANALYSE MENSUELLE CROISÉE</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <figure class="asset-figure">
+                    <img class="zoomable" src="assets/photo_fourrage_hiver.jpg" alt="Fig 9.1 — Parcelles d'orge fourragère et d'avoine-vesce d'hiver conduites en bour à Ifrane" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 9.1 — Fourrages d'hiver conduits en bour</span><span class="zoom-hint">[Agrandir]</span></figcaption>
+                </figure>
+
+                <h3>Lecture croisée du climat et du comportement des cultures</h3>
+                <ul class="clean-list">
+                    <li><strong>Le ciseau climatique (Mai – Septembre) :</strong> Alors que la pluie efficace ($P_{\text{eff}}$, barres grises) couvre les besoins d'octobre à avril, l'$ET_0$ culmine à <span class="hl-red">182 mm en juillet</span> contre seulement <strong>6 mm de pluie efficace</strong>, ouvrant un déficit climatique de 176 mm/mois.</li>
+                    <li><strong>Le piège évité sur les 14 020 ha de fourrages :</strong> Le graphique superpose le besoin d'une <em>Luzerne pérenne FAO</em> (courbe rouge pointillée qui explose en plein déficit d'été) et celui de l'<strong>Orge / Avoine d'hiver réellement cultivée à Ifrane</strong> (courbe verte calée sur la pluie d'hiver et récoltée avant l'été).</li>
+                </ul>
+
+                <div class="math-block">
+                    <div class="math-label">Constat analytique</div>
+                    Ce croisement prouve que plus de 85 % des fourrages d'Ifrane poussent pendant la fenêtre d'excédent pluviométrique hivernal (besoin d'irrigation estival nul), seuls 1 834 ha (Maïs et fourrages d'été) sollicitant l'irrigation en été (<span class="hl-green">9,46 Mm³/an</span>).
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Superposition : Pluie Efficace, ET0 et Besoin en Eau par Filière (mm/mois)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Pluie Efficace USDA-SCS & ET0 (mm/mois)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Besoin ETc Pommier, Luzerne FAO vs Orge DPA (mm)</span>
+                    </div>
+                    <div id="chart-climat-kc" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Cycle Annuel Mensuel (Janvier à Décembre)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Croisement Climat & Coefficients Kc</span>
+            <span>09 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 10. PROFIL MENSUEL MULTI-FILIÈRES & RATIONNEMENT ESTIVAL (50%)    -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="9">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">10 / Dynamique Saisonnière & Gestion de la Pénurie</span>
+                <h1>Répartition Mensuelle des Besoins par Filière et Effet du Rationnement (50 %)</h1>
+                <h2>Décomposition du pic estival (Juillet : 17,67 Mm³ nets) et impact du plafonnement sur les prélèvements bruts</h2>
+            </div>
+            <div class="header-meta">90 % GOUTTE-À-GOUTTE<br>ÉCONOMIE ESTIVALE : 24,28 MM³</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <figure class="asset-figure">
+                    <img class="zoomable" src="assets/photo_goutte_a_goutte.jpg" alt="Fig 10.1 — Équipement en micro-irrigation goutte-à-goutte (90 % du parc équipé) et pompage privé à la parcelle" onerror="this.src='https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 10.1 — Micro-irrigation à la parcelle (90 %)</span><span class="zoom-hint">[Agrandir]</span></figcaption>
+                </figure>
+
+                <h3>Analyse combinée : Besoins nets par filière vs Prélèvements bruts</h3>
+                <ul class="clean-list">
+                    <li><strong>Concentration sur 3 mois :</strong> Les barres empilées montrent la contribution mensuelle de chaque filière aux <span class="hl-blue">65,24 Mm³/an de besoins nets</span>. Les mois de <strong>Juin (11,94 Mm³)</strong>, <span class="hl-red">Juillet (17,67 Mm³)</span> et <strong>Août (15,74 Mm³)</strong> concentrent <strong>69,5 %</strong> de la demande annuelle.</li>
+                    <li><strong>Effet de l'efficience (88 %) et du rationnement estival (50 %) :</strong> La courbe rouge pointillée trace le besoin brut théorique à 100 % de satisfaction (qui atteint <span class="hl-red">23,13 Mm³ en juillet</span> et <strong>85,43 Mm³/an</strong>).</li>
+                    <li><strong>Prélèvement réel bridé (courbe verte) :</strong> Le rationnement à 50 % de l'Arboriculture, de l'Olivier et du Maïs entre juillet et septembre abaisse le prélèvement annuel à <span class="hl-green">61,15 Mm³/an</span>, soit <span class="hl-green">24,28 Mm³ non prélevés</span> sur la ressource en été.</li>
+                </ul>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Bilan Mensuel : Besoins Nets Empilés par Filière vs Volumes Bruts (Mm³/mois)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Besoin Net par Filière (Mm³/mois)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Volume Brut 100 % vs Brut Rationné 50 % (Mm³)</span>
+                    </div>
+                    <div id="chart-mensuel-komplexe" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Mois de l'Année (Pic Hydrique en Juin – Juillet – Août)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Profil Mensuel & Rationnement Estival</span>
+            <span>10 / 19</span>
+        </div>
+    </section>
+<!-- ================================================================= -->
+    <!-- 11. COMPARAISON INTER-COMMUNALE : SURFACES vs CONSOMMATION D'EAU  -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="10">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">11 / Analyse Comparative Inter-Communale ( Irrigation & Surfaces )</span>
+                <h1>Quelles Communes Cultivent le Plus et Quelles Communes Consomment le Plus d'Eau ?</h1>
+                <h2>Croisement entre Surface totale cultivée (ha), Surface irriguée (ha) et Volume d'eau consommé ($Mm^3/\text{an}$)</h2>
+            </div>
+            <div class="header-meta">COMPARAISON DES 10 COMMUNES<br>SURFACE TOTALE VS EAU</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>Pourquoi la commune la plus cultivée n'est pas celle qui consomme le plus d'eau</h3>
+                <ul class="clean-list">
+                    <li><strong>1. En surface cultivée totale (Pluvial + Irrigué) :</strong> C'est <span class="hl-blue">Sidi El Makhfi (18 424 ha)</span> qui possède la plus grande superficie agricole, suivie de <strong>Tigrigra (14 388 ha)</strong> et de <strong>Timahdite (12 204 ha)</strong>.</li>
+                    <li><strong>2. En consommation d'eau d'irrigation ($Mm^3/\text{an}$) :</strong> La hiérarchie s'inverse ! C'est <span class="hl-red">Tigrigra</span> qui consomme le plus d'eau (<span class="hl-red">17,05 Mm³ nets / 22,19 Mm³ bruts</span>) devant <strong>Sidi El Makhfi (13,07 Mm³ nets / 16,96 Mm³ bruts)</strong>, car Tigrigra détient le plus grand périmètre irrigué arboricole (3 928 ha irrigués).</li>
+                    <li><strong>3. Le contraste Dayat Aoua vs Timahdite :</strong> Bien que <strong>Timahdite</strong> cultive 12 204 ha (majoritairement en bour), elle ne consomme que <strong>3,97 Mm³ nets</strong>, alors que <span class="hl-green">Dayat Aoua</span> (seulement 2 504 ha au total, mais à 78 % en vergers irrigués) consomme plus du double d'eau (<span class="hl-green">8,25 Mm³ nets / 10,67 Mm³ bruts</span>).</li>
+                </ul>
+
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Commune</th>
+                            <th>Surf. Totale</th>
+                            <th>Surf. Irriguée</th>
+                            <th>Besoin Net ($Mm^3$)</th>
+                            <th>Besoin Brut ($Mm^3$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1. Tigrigra</strong></td><td>14 388 ha</td><td><span class="hl-blue">3 928 ha</span></td><td><span class="hl-red">17,05 Mm³</span></td><td>22,19 Mm³</td></tr>
+                        <tr><td><strong>2. Sidi El Makhfi</strong></td><td><span class="hl-blue">18 424 ha</span></td><td>3 108 ha</td><td><span class="hl-red">13,07 Mm³</span></td><td>16,96 Mm³</td></tr>
+                        <tr><td><strong>3. Dayat Aoua</strong></td><td>2 504 ha</td><td>1 948 ha</td><td><strong>8,25 Mm³</strong></td><td>10,67 Mm³</td></tr>
+                        <tr><td><strong>4. Oued Ifrane</strong></td><td>9 972 ha</td><td>1 854 ha</td><td><strong>8,00 Mm³</strong></td><td>10,69 Mm³</td></tr>
+                        <tr><td><strong>5. Ain Leuh</strong></td><td>6 226 ha</td><td>1 587 ha</td><td><strong>6,40 Mm³</strong></td><td>8,27 Mm³</td></tr>
+                        <tr><td><strong>6. Tizguite</strong></td><td>4 885 ha</td><td>1 135 ha</td><td><strong>4,75 Mm³</strong></td><td>6,32 Mm³</td></tr>
+                        <tr><td><strong>7. Timahdite</strong></td><td>12 204 ha</td><td>822 ha</td><td><strong>3,97 Mm³</strong></td><td>5,49 Mm³</td></tr>
+                        <tr><td><strong>8. Ben Smim</strong></td><td>3 229 ha</td><td>1 088 ha</td><td><strong>3,74 Mm³</strong></td><td>4,84 Mm³</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Croisement Communal : Surfaces Cultivées (ha) vs Besoins en Eau (Mm³/an)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Besoin Net & Besoin Brut d'Irrigation (Mm³/an)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Surface Totale vs Surface Irriguée (ha)</span>
+                    </div>
+                    <div id="chart-communes-irrigation" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Communes de la Province d'Ifrane (Classées par Consommation d'Eau)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Comparaison Spatiale des 10 Communes</span>
+            <span>11 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 12. ANALYSE SPATIALE DU CHEPTEL (3 ESPÈCES : OVINS, BOVINS, CAPR.)-->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="11">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-agri">12 / Analyse Communale du Cheptel (Ovins, Bovins, Caprins) & Synthèse Agricole</span>
+                <h1>Quelles Communes Concentrent le Plus de Cheptel et Consomment le Plus d'Eau Pastorale ?</h1>
+                <h2>Répartition communale des 3 espèces de ruminants (627 010 têtes) croisée avec le volume d'abreuvement ($m^3/\text{an}$)</h2>
+            </div>
+            <div class="header-meta">627 010 RUMINANTS • 10 COMMUNES<br>ABREUVEMENT : 1,41 MM³/AN</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <figure class="asset-figure">
+                    <img class="zoomable" src="assets/photo_cheptel_timahdite.jpg" alt="Fig 12.1 — Troupeau ovin de race Timahdite sur les parcours pastoraux du Moyen Atlas" onerror="this.src='https://images.unsplash.com/photo-1484557985045-edf25e08da73?auto=format&fit=crop&w=1200&q=85'">
+                    <figcaption><span>Fig 12.1 — Pastoralisme ovin à Timahdite</span><span class="zoom-hint">[Agrandir]</span></figcaption>
+                </figure>
+
+                <h3>Hiérarchie communale des 3 catégories de cheptel (Ovins, Bovins, Caprins)</h3>
+                <ul class="clean-list">
+                    <li><strong>1. La capitale pastorale (Timahdite) :</strong> Le graphique multi-variables ci-contre montre que <span class="hl-red">Timahdite</span> domine massivement l'élevage avec <span class="hl-red">190 500 ovins</span>, 12 400 caprins et 3 850 bovins, générant le <strong>premier besoin en eau pastoral de la province (422 000 m³/an</strong>, soit 30,0 % du total des ruminants).</li>
+                    <li><strong>2. Le trio de tête pastoral :</strong> Derrière Timahdite, les communes d'<strong>Ain Leuh (249 700 m³/an</strong> pour 96 500 ovins et 3 920 bovins), d'<strong>Oued Ifrane (221 000 m³/an)</strong> et de <strong>Sidi El Makhfi (189 400 m³/an)</strong> concentrent les plus grands besoins d'abreuvement.</li>
+                    <li><strong>3. Poids unitaire des Bovins (40 L/j) :</strong> Avec une dotation de <strong>14,6 m³/tête/an</strong> (contre 1,825 m³/an pour un ovin et 1,46 m³/an pour un caprin), les <strong>21 858 bovins</strong> absorbent <strong>22,7 %</strong> de l'eau d'abreuvement des ruminants (319 127 m³/an).</li>
+                </ul>
+
+                <div class="metrics-strip">
+                    <div class="metric-item">
+                        <div class="val" style="color:#15803d;">65,24 Mm³</div>
+                        <div class="lbl">Irrigation Nette / an</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#0369a1;">1,41 Mm³</div>
+                        <div class="lbl">Ovins, Bovins & Caprins / an</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#b91c1c;">66,65 Mm³</div>
+                        <div class="lbl">Besoin Net Total Agricole</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Analyse Pastorale par Commune : Ovins, Caprins & Bovins (Têtes) vs Eau Consommée (m³/an)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres Empilées) : Ovins, Caprins & Bovins (Têtes)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe Rouge) : Volume d'Abreuvement (m³/an)</span>
+                    </div>
+                    <div id="chart-cheptel-communes" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Communes d'Ifrane (Classées par Consommation d'Eau du Cheptel)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet I : Agriculture & Élevage — Analyse Communale du Cheptel (Ovins, Bovins, Caprins)</span>
+            <span>12 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 13. VOLET II (AEPIvf 1) : DIAGNOSTIC, POPULATION & AEPI PDAIRE    -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="12">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-aepi">13 / Volet II — AEPI & Secteurs : Diagnostic des Données, Population & Enveloppe PDAIRE</span>
+                <h1>Diagnostic des Données Collectées et Décomposition de l’AEPI du PDAIRE (7,64 Mm³/an)</h1>
+                <h2>Une couverture temporelle et spatiale inégale exigeant des interpolations entre horizons et l'exclusion des autonomes</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-collecte">COLLECTÉ</span> <span class="status-pill st-estime">ESTIMÉ</span><br>AEPI 2025–26 : 7,64 MM³/AN</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Diagnostic des données collectées : une couverture inégale</h3>
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Donnée</th>
+                            <th>Source officielle</th>
+                            <th>Couverture réelle</th>
+                            <th>Limite & Traitement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>AEPI & dotations</strong></td>
+                            <td>PDAIRE (tab. 7, ann. A-1)</td>
+                            <td>Horizons 2018, 2020, 2025, 2030</td>
+                            <td><span class="status-pill st-estime">Interpolée</span> entre horizons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Population</strong></td>
+                            <td>RGPH 2014 et 2024 (HCP)</td>
+                            <td>2 recensements par unité</td>
+                            <td><span class="status-pill st-estime">Interpolée</span> (156 304 $\rightarrow$ 161 953)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emplois</strong></td>
+                            <td>Établissements HCP</td>
+                            <td>2023–24 : 6 482 tert., 723 ind.</td>
+                            <td><span class="status-pill st-estime">Ventilés</span> selon la démographie</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nuitées & Lits</strong></td>
+                            <td>Annuaires HCP & PNI</td>
+                            <td>Province (2017–2023) & Lits PNI</td>
+                            <td><span class="status-pill st-estime">Prolongées</span> (+5,41 %) & lits</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>2. L'AEPI globale d'Ifrane : une enveloppe commune à décomposer</h3>
+                <ul class="clean-list">
+                    <li><strong>Principe du PDAIRE :</strong> $\text{AEPI Totale (7,64 Mm}^3\text{/an en 2025–26)} = \text{Domestique et autres} + \text{Tertiaire} + \text{Industrie} + \text{Tourisme}$. Notre objectif est d'extraire la part spécifique de chaque secteur raccordé au réseau public.</li>
+                    <li><strong>Exclusion des grands acteurs autonomes :</strong> Les sites disposant de leurs propres forages/sources privées (ex : <strong>usines d’embouteillage de Ben Smim, Université Al Akhawayn</strong>) sont exclus du réseau public pour ne pas fausser STRATEAU (traitement séparé via les volumes autorisés par l’ABHS).</li>
+                </ul>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Croisement Communal : Population Urbaine/Rurale (Hab.) et AEPI du PDAIRE (Mm³/an)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres Empilées) : Population Urbaine & Rurale 2025–26 (Hab.)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe Rouge) : AEPI PDAIRE 2025–26 (Mm³/an)</span>
+                    </div>
+                    <div id="chart-population-communes" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Communes d'Ifrane (Azrou et Ifrane concentrent 64 % de l'AEPI)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet II : AEPI, Industrie, Tertiaire & Tourisme — Diagnostic des Données, Population & Enveloppe AEPI</span>
+            <span>13 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 14. VOLET II (AEPIvf 2) : VENTILATION EMPLOIS & TOURISME          -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="13">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-tour">14 / Volet II — Méthodes de Ventilation des Déterminants (Emplois & Nuitées Touristiques)</span>
+                <h1>Comment Nous Avons Ventilé les Emplois et les Nuitées par Commune et par Année</h1>
+                <h2>Rétropolation démographique des emplois (6 482 tertiaires, 723 industriels) et projection touristique (+5,41 %/an, clé des lits PNI)</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-collecte">COLLECTÉ</span> <span class="status-pill st-estime">ESTIMÉ</span><br>10 COMMUNES × 10 CAMPAGNES</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Industrie & Tertiaire : Ventilation temporelle des emplois</h3>
+                <p>À partir de la cartographie HCP 2023–24 (<span class="hl-blue">6 482 emplois tertiaires</span> et <span class="hl-red">723 emplois industriels</span> permanents hors administration publique), l'hypothèse retenue est que l'emploi évolue proportionnellement à la démographie de chaque commune :</p>
+                <div class="math-block">
+                    <div class="math-label"><span class="status-pill st-estime">ESTIMÉ</span> Formule de ventilation annuelle des emplois</div>
+                    $$\text{Emplois}_{\text{année } N} = \text{Emplois}_{2023\text{-}24} \times \left( \frac{\text{Population}_{\text{année } N}}{\text{Population}_{2023\text{-}24}} \right)$$
+                </div>
+
+                <h3>2. Tourisme : Prolongement (+5,41 %/an) et clé des lits (PNI)</h3>
+                <ul class="clean-list">
+                    <li><strong>Prolongement temporel (2024–2026) :</strong> Les annuaires HCP s'arrêtant en 2023, extrapolation au taux annuel moyen de <span class="hl-green">+5,41 %/an</span> : <strong>174 049 nuitées</strong> (2016–17) $\rightarrow$ creux pandémique à <span class="hl-red">95 128</span> (2019–20) $\rightarrow$ rebond à <strong>238 714</strong> (2022–23) $\rightarrow$ <span class="hl-purple">279 591 nuitées en 2025–26</span>.</li>
+                    <li><strong>Ventilation communale par les lits (Parc National d'Ifrane) :</strong> <span class="hl-purple">Ifrane (42,7145 %)</span> et <span class="hl-purple">Ben Smim (42,0118 %)</span> concentrent <strong>plus de 84,7 % des nuitées ventilées</strong>, devant Azrou (5,5473 %) et Tigrigra (4,5118 %).</li>
+                </ul>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Trajectoire croisée des Déterminants : Nuitées Ventilées (Barres) et Emplois (Courbes)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres Empilées) : Nuitées (Ifrane + Ben Smim vs Reste)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Emplois Totaux (Tertiaire + Industrie)</span>
+                    </div>
+                    <div id="chart-tourisme-determinants" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Chronique Décennale (2016–17 à 2025–26)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet II : AEPI, Industrie, Tertiaire & Tourisme — Ventilation des Emplois et des Nuitées Touristiques</span>
+            <span>14 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 15. VOLET II (AEPIvf 3) : BESOINS UNITAIRES & 4 CANEVAS LIVRÉS    -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="14">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-aepi">15 / Volet II — Besoins Unitaires & Livraison des 4 Canevas STRATEAU Sectoriels</span>
+                <h1>Le Travail Demandé est Fait : Les Quatre Canevas STRATEAU Sont Remplis</h1>
+                <h2>Statistiques strictement limitées aux feuilles du Canevas STRATEAU (Industrie, Tertiaire, Tourisme, Eau potable)</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-estime">RATIOS</span> <span class="status-pill st-livre">4 CANEVAS LIVRÉS</span><br>10 COMMUNES × 10 CAMPAGNES</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Besoins unitaires retenus (en attendant les consommations réelles ONEE)</h3>
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Canevas STRATEAU</th>
+                            <th>Déterminant & Activité</th>
+                            <th>Besoin unitaire annuel</th>
+                            <th>Base & Hypothèse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Tertiaire</strong></td>
+                            <td>Employés • <em>Commerce et services</em></td>
+                            <td><span class="hl-blue">9 m³ / employé / an</span></td>
+                            <td>40 L/j ouvré $\times$ 230 j (poids mensuel = 1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Industrie</strong></td>
+                            <td>Employés • <em>Industrie (ensemble)</em></td>
+                            <td><span class="hl-red">100 m³ / employé / an</span></td>
+                            <td>Hypothèse basse de travail (poids = 1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Tourisme</strong></td>
+                            <td>Nuitées • <em>Hébergement classé</em></td>
+                            <td><span class="hl-purple">0,25 m³ / nuitée</span></td>
+                            <td>250 L/nuitée (Norme ONEP/ONEE)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Eau potable</strong></td>
+                            <td>Habitants • <em>Domestique et autres</em></td>
+                            <td><strong>Part résiduelle AEP</strong></td>
+                            <td>$\text{AEP Totale} - (\text{Ind.} + \text{Tert.} + \text{Tour.})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- CHIFFRES STRICTEMENT LIMITÉS AUX FEUILLES DU CANEVAS STRATEAU DU VOLET II (HORS FEUILLES DE CALCUL INTERNE !) -->
+                <div class="mega-kpi-grid">
+                    <div class="mega-kpi-item green">
+                        <div class="mega-kpi-num">4 Canevas</div>
+                        <div class="mega-kpi-title">8 Feuilles « C_ »</div>
+                        <div class="mega-kpi-sub">4 Déterminants + 4 BU Mensuels</div>
+                    </div>
+                    <div class="mega-kpi-item blue">
+                        <div class="mega-kpi-num">568 Lignes</div>
+                        <div class="mega-kpi-title">Dans le Canevas Pur</div>
+                        <div class="mega-kpi-sub">400 lignes (10×10) + 48 mensuelles</div>
+                    </div>
+                    <div class="mega-kpi-item accent">
+                        <div class="mega-kpi-num">3 877</div>
+                        <div class="mega-kpi-title">Valeurs Canevas</div>
+                        <div class="mega-kpi-sub">100 % conformes au gabarit</div>
+                    </div>
+                </div>
+
+                <p style="font-size:12.5px; color:#444; margin:0;"><em>Limite : un seul niveau d'activité par secteur (alors que le template détaille les branches). STRATEAU n'ayant pas pu être exécuté, le besoin a été calculé hors outil.</em></p>
+            </div>
+
+            <div class="col-visual">
+                <h3>Aperçu des feuilles Canevas `C_` livrées (Cliquer pour zoomer)</h3>
+                <!-- CASCADE VISUELLE DES PRINTSCREENS DES 4 CANEVAS C_ (IMAGE DE L'INDUSTRIE NOMMÉE Industrie.png) -->
+                <div class="canvas-stack" style="height:175px; margin-bottom:10px;">
+                    <div class="stack-card stack-1" style="height:132px;" onclick="openDirectLightbox('assets/capture_sources_organismes.png', 'Canevas STRATEAU C_AEP_Determinants (106 lignes, 914 valeurs) & C_AEP_BU_mensuel (36 lignes, 131 valeurs)')">
+                        <img style="height:102px;" src="assets/capture_sources_organismes.png" alt="Canevas Eau Potable" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl"><span>C_AEP_Determinants (10 communes × 10 ans)</span><span>[Zoom]</span></div>
+                    </div>
+                    <div class="stack-card stack-2" style="height:132px;" onclick="openDirectLightbox('assets/Industrie.png', 'Canevas STRATEAU C_Industrie_Determinants (106 lignes, 813 valeurs) & C_Tertiaire_Determinants (106 lignes, 813 valeurs)')">
+                        <img style="height:102px;" src="assets/Industrie.png" alt="Canevas Industrie" onerror="this.src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl" style="background:#b91c1c;"><span>Industrie : C_Industrie & C_Tertiaire</span><span>[Zoom]</span></div>
+                    </div>
+                    <div class="stack-card stack-3" style="height:132px;" onclick="openDirectLightbox('assets/capture_resultats_fao56.png', 'Canevas STRATEAU C_Tourisme_Determinants (106 lignes, 813 valeurs) & C_Tourisme_BU_mensuel (36 lignes, 131 valeurs)')">
+                        <img style="height:102px;" src="assets/capture_resultats_fao56.png" alt="Canevas Tourisme" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80'">
+                        <div class="stack-lbl" style="background:#6d28d9;"><span>C_Tourisme_Determinants & BU (142 lignes)</span><span>[Zoom]</span></div>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Détail exact des lignes et valeurs renseignées dans les 4 Canevas STRATEAU du Volet II</span>
+                    </div>
+                    <div id="chart-aep-globale" class="chart-surface" style="height:205px;"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 4 Canevas Sectoriels STRATEAU (Déterminants + Besoins Unitaires Mensuels)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet II : AEPI, Industrie, Tertiaire & Tourisme — Ratios Unitaires & 4 Canevas STRATEAU Livrés</span>
+            <span>15 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 16. VOLET II (AEPIvf 4) : AZROU, BEN SMIM & IFRANE PORTENT 85 %   -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="15">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-aepi">16 / Volet II — Résultats du Calcul Hors Outil par Commune (Campagne 2025–2026)</span>
+                <h1>Azrou, Ben Smim et Ifrane Portent 85 % du Besoin des Trois Secteurs (201,9 mille m³/an)</h1>
+                <h2>Analyse de la part des activités économiques dans l'enveloppe AEPI de chaque commune (2,6 % à l'échelle provinciale)</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-calcule">CALCULÉ PAR NOUS</span><br>PROVINCE : 201,9 MILLE M³ (2,6 % AEP)</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>Synthèse communale exacte en milliers de $m^3/\text{an}$ (2025–26)</h3>
+                <p>Le croisement des déterminants et des dotations montre que les trois secteurs totalisent <strong>201,9 milliers de m³/an</strong> (0,2019 Mm³), soit <strong>2,6 % de l'AEPI provinciale</strong>, mais jusqu'à <span class="hl-red">11,3 % de l'AEP à Ben Smim</span> :</p>
+
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Commune</th>
+                            <th>Tert. ($10^3\text{ m}^3$)</th>
+                            <th>Indus. ($10^3\text{ m}^3$)</th>
+                            <th>Tour. ($10^3\text{ m}^3$)</th>
+                            <th>Total ($10^3\text{ m}^3$)</th>
+                            <th>% AEP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1. Azrou</strong></td><td><span class="hl-blue">31,0</span></td><td><span class="hl-red">42,7</span></td><td>3,9</td><td><strong>77,6</strong></td><td>2,7 %</td></tr>
+                        <tr><td><strong>2. Ben Smim</strong></td><td>3,1</td><td><span class="hl-red">15,0</span></td><td><span class="hl-purple">29,4</span></td><td><strong>47,5</strong></td><td><span class="hl-red">11,3 %</span></td></tr>
+                        <tr><td><strong>3. Ifrane</strong></td><td><span class="hl-blue">12,9</span></td><td>4,7</td><td><span class="hl-purple">29,9</span></td><td><strong>47,4</strong></td><td>2,4 %</td></tr>
+                        <tr><td><strong>4. Tigrigra</strong></td><td>1,2</td><td>1,7</td><td>3,2</td><td><strong>6,0</strong></td><td>2,0 %</td></tr>
+                        <tr><td><strong>5. Sidi El Makhfi</strong></td><td>2,9</td><td>2,5</td><td>0,3</td><td><strong>5,6</strong></td><td>1,1 %</td></tr>
+                        <tr><td><strong>6. Ain Leuh</strong></td><td>2,2</td><td>2,2</td><td>1,2</td><td><strong>5,6</strong></td><td>1,9 %</td></tr>
+                        <tr><td><strong>7. Timahdite</strong></td><td>2,3</td><td>1,6</td><td>0,5</td><td><strong>4,4</strong></td><td>1,1 %</td></tr>
+                        <tr><td><strong>8. Oued Ifrane</strong></td><td>1,2</td><td>1,8</td><td>0,7</td><td><strong>3,7</strong></td><td>1,3 %</td></tr>
+                        <tr><td><strong>9. Tizguite</strong></td><td>0,9</td><td>0,9</td><td>0,4</td><td><strong>2,2</strong></td><td>0,7 %</td></tr>
+                        <tr><td><strong>10. Dayat Aoua</strong></td><td>1,1</td><td>0,2</td><td>0,6</td><td><strong>1,9</strong></td><td>0,9 %</td></tr>
+                        <tr><td><strong>PROVINCE</strong></td><td><strong>58,7</strong></td><td><strong>73,2</strong></td><td><strong>69,9</strong></td><td><strong>201,9</strong></td><td><strong>2,6 %</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Besoins par Commune (en milliers de m³/an) et Poids dans l'AEPI Communale (%)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres Empilées) : Tertiaire, Industrie & Tourisme (10³ m³)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe Rouge) : Part dans l'AEP de la Commune (%)</span>
+                    </div>
+                    <div id="chart-indus-tertiaire-communes" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Communes d'Ifrane (Azrou, Ben Smim et Ifrane concentrent 85 % du total)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet II : AEPI, Industrie, Tertiaire & Tourisme — Résultats Communaux & Part dans l'AEPI</span>
+            <span>16 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 17. VOLET II (AEPIvf 5) : DYNAMIQUE (+60,6%) & HIÉRARCHIE FINALE  -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="16">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num tag-tour">17 / Volet II — Synthèse Temporelle (+60,6 %) et Hiérarchie Sectorielle (2016–2026)</span>
+                <h1>Le Tourisme Accélère (+60,6 %), mais l’Industrie Reste le 1er Besoin Sectoriel en 2025–26</h1>
+                <h2>Croisement de la dynamique de croissance (Base 100) et des volumes finaux : Industrie (0,0732 Mm³) > Tourisme (0,0699 Mm³) > Tertiaire (0,0587 Mm³)</h2>
+            </div>
+            <div class="header-meta"><span class="status-pill st-calcule">CALCULÉ PAR NOUS</span><br>IND. > TOUR. > TERT.</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>1. Dynamique de croissance sur 10 ans (2016–17 à 2025–26)</h3>
+                <ul class="clean-list">
+                    <li><strong>Tourisme (<span class="hl-purple">+60,6 %</span>) :</strong> Moteur de croissance sectorielle (passant de 0,0435 Mm³ à <span class="hl-purple">0,0699 Mm³/an</span>), mais composante la plus volatile (chute à 0,0238 Mm³ en 2019–20).</li>
+                    <li><strong>AEPI Totale (<span class="hl-green">+22,3 %</span>) :</strong> Progression de 6,25 Mm³/an (2016–17) à <strong>7,64 Mm³/an</strong> (2025–26), dont 7,44 Mm³/an pour le domestique et autres.</li>
+                    <li><strong>Industrie (<span class="hl-red">+5,8 %</span>) & Tertiaire (<span class="hl-blue">+2,8 %</span>) :</strong> Croissance régulière calée sur l'évolution démographique communale.</li>
+                </ul>
+
+                <h3>2. Recomposition de la hiérarchie en fin de période (2025–26)</h3>
+                <ul class="clean-list">
+                    <li><strong>Le croisement de 2022–23 :</strong> À partir de la campagne 2022–23 (0,0597 Mm³ contre 0,0582 Mm³), <strong>le Tourisme dépasse durablement le secteur Tertiaire</strong>.</li>
+                    <li><strong>Hiérarchie finale équilibrée en 2025–26 :</strong> <span class="hl-red">1. Industrie (0,0732 Mm³/an)</span> $>$ <span class="hl-purple">2. Tourisme (0,0699 Mm³/an)</span> $>$ <span class="hl-blue">3. Tertiaire (0,0587 Mm³/an)</span>.</li>
+                </ul>
+
+                <div class="metrics-strip">
+                    <div class="metric-item">
+                        <div class="val" style="color:#b91c1c;">0,0732 Mm³</div>
+                        <div class="lbl">1. Industrie (+5,8 %)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#6d28d9;">0,0699 Mm³</div>
+                        <div class="lbl">2. Tourisme (+60,6 %)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#0369a1;">0,0587 Mm³</div>
+                        <div class="lbl">3. Tertiaire (+2,8 %)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Évolution comparée des Volumes (Mm³/an) et de l'Indice Base 100 (2016–17 à 2025–26)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Volumes Industrie, Tourisme & Tertiaire (Mm³/an)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbes) : Indice Base 100 (Tourisme +60,6 %)</span>
+                    </div>
+                    <div id="chart-comparaison-finale" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Chronique Décennale (Le Tourisme dépasse le Tertiaire dès 2022–23)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Volet II : AEPI, Industrie, Tertiaire & Tourisme — Dynamique Comparée & Hiérarchie Finale</span>
+            <span>17 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 18. SYNTHÈSE GÉNÉRALE INTER-SECTORIELLE (SANS BLOC OUVERTURE)     -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="17">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num">18 / Synthèse Générale Inter-Sectorielle — Province d'Ifrane</span>
+                <h1>Bilan Global de la Demande en Eau à Ifrane : Tous Secteurs Confondus</h1>
+                <h2>Mise en regard des besoins agricoles (Irrigation FAO-56 et Cheptel) et de l'enveloppe AEPI (Domestique, Industrie, Tourisme, Tertiaire)</h2>
+            </div>
+            <div class="header-meta">BILAN GLOBAL : 74,29 MM³ NETS<br>94,48 MM³ BRUTS (70,20 RATIONNÉ)</div>
+        </div>
+
+        <div class="editorial-grid">
+            <div class="col-text">
+                <h3>La prépondérance structurelle de l'Irrigation dans le bilan provincial</h3>
+                <p>La consolidation de l'ensemble des secteurs modélisés sur les 10 communes d'Ifrane met en évidence le poids déterminant du secteur hydro-agricole face aux usages urbains et économiques :</p>
+
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Secteur d'Usage (Province d'Ifrane)</th>
+                            <th>Besoin Net / Réseau</th>
+                            <th>Volume Brut / Rationné</th>
+                            <th>Part du Bilan Net</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Irrigation Agricole (15 470 ha)</strong></td>
+                            <td><span class="hl-green">65,24 Mm³/an</span></td>
+                            <td>85,43 Mm³ (61,15 rationné)</td>
+                            <td><span class="hl-green">87,81 %</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. AEPI Domestique & Autres (161 953 hab.)</strong></td>
+                            <td><span class="hl-blue">7,44 Mm³/an</span></td>
+                            <td>7,44 Mm³/an (PDAIRE)</td>
+                            <td><span class="hl-blue">10,02 %</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Abreuvement du Cheptel (3 espèces)</strong></td>
+                            <td><strong>1,41 Mm³/an</strong></td>
+                            <td>1,41 Mm³/an (627 010 têtes)</td>
+                            <td><strong>1,90 %</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Industrie Raccordée (735 emplois)</strong></td>
+                            <td><span class="hl-red">0,0732 Mm³/an</span></td>
+                            <td>73 240 m³/an</td>
+                            <td><strong>0,10 %</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Tourisme Classé (279 591 nuitées)</strong></td>
+                            <td><span class="hl-purple">0,0699 Mm³/an</span></td>
+                            <td>69 898 m³/an</td>
+                            <td><strong>0,09 %</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. Tertiaire Privé (6 537 emplois)</strong></td>
+                            <td><strong>0,0587 Mm³/an</strong></td>
+                            <td>58 728 m³/an</td>
+                            <td><strong>0,08 %</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL PROVINCE D'IFRANE</strong></td>
+                            <td><strong>74,29 Mm³/an</strong></td>
+                            <td><strong>94,48 Mm³/an (70,20 bridé)</strong></td>
+                            <td><strong>100,0 %</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="metrics-strip">
+                    <div class="metric-item">
+                        <div class="val" style="color:#15803d;">89,7 %</div>
+                        <div class="lbl">Part Agriculture + Cheptel</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#0369a1;">10,3 %</div>
+                        <div class="lbl">Part AEPI Totale (7,64 Mm³)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" style="color:#b91c1c;">74,29 Mm³</div>
+                        <div class="lbl">Demande Nette Totale / an</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-visual">
+                <div class="chart-wrapper">
+                    <div class="chart-top-bar">
+                        <span class="chart-main-title">Comparaison Globale par Commune : Agriculture & Cheptel vs AEPI (Domestique, Ind., Tour., Tert.)</span>
+                    </div>
+                    <div class="axis-badges">
+                        <span class="axis-badge-left">▲ AXE GAUCHE (Barres) : Irrigation + Cheptel vs AEPI Totale (Mm³/an)</span>
+                        <span class="axis-badge-right">▲ AXE DROIT (Courbe) : Part de l'Agriculture dans la Commune (%)</span>
+                    </div>
+                    <div id="chart-synthese-tous-secteurs" class="chart-surface"></div>
+                    <div class="axis-x-footer">► AXE HORIZONTAL (X) : Les 10 Communes d'Ifrane (Opposition entre Communes Rurales Irriguées et Pôles Urbains)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Projet Pilote STRATEAU Ifrane — Synthèse Générale Tous Secteurs Confondus</span>
+            <span>18 / 19</span>
+        </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 19. DIAPOSITIVE FINALE SÉPARÉE : CONCLUSION & APRÈS-SOMMET        -->
+    <!-- ================================================================= -->
+    <section class="slide" data-slide="18">
+        <div class="slide-header">
+            <div class="header-left">
+                <span class="section-num">19 / Conclusion Générale & Feuille de Route Après-Sommet</span>
+                <h1>Bilan des Acquis et Prochaines Étapes pour l’Affinement du Modèle STRATEAU</h1>
+                <h2>Consolidation par les données officielles sollicitées par courrier et couplage avec l'analyse spatiale satellitaire présentée en amont</h2>
+            </div>
+            <div class="header-meta">PERSPECTIVES APRÈS-SOMMET<br>COURRIERS OFFICIELS & TÉLÉDÉTECTION</div>
+        </div>
+
+        <div class="editorial-grid-equal">
+            <div class="col-text">
+                <h3>1. Ce qui est acquis aujourd'hui et les données attendues (Courriers envoyés)</h3>
+                <p>L'architecture complète des <strong>Canevas STRATEAU</strong> est opérationnelle sur les 10 communes et les 10 campagnes (2016–2026). Pour remplacer nos hypothèses de ventilation et nos ratios unitaires généraux par des mesures réelles, <strong>des courriers officiels de demande de données complémentaires ont été adressés aux organismes partenaires</strong> :</p>
+
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>Organisme sollicité</th>
+                            <th>Données attendues suite aux courriers officiels</th>
+                            <th>Impact sur le modèle STRATEAU</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="org-tag org-onssa">ONEE (Branche Eau)</span></td>
+                            <td>Volumes réels distribués et facturés par centre et par catégorie d'abonnés (ménages, administrations, hôtels, industriels).</td>
+                            <td>Calage exact des dotations nettes et des rendements de réseau par commune.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-abhs">ABH du Sebou</span></td>
+                            <td>Registre des volumes de prélèvement autorisés pour les grands consommateurs autonomes (embouteillage Ben Smim, Al Akhawayn...).</td>
+                            <td>Intégration séparée des gros usagers hors réseau public AEPI.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-hcp">Délégation Tourisme / PNI</span></td>
+                            <td>Nuitées mensuelles par commune (2024–2026) et vérification de la capacité réelle en lits (notamment à Ben Smim).</td>
+                            <td>Saisonnalité mensuelle réelle du tourisme (pics d'hiver et d'été).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="org-tag org-dpa">DPA d'Ifrane</span></td>
+                            <td>Séries historiques communales antérieures à 2022 et détail des modes d'irrigation par filière culturale.</td>
+                            <td>Affinement des clés communales historiques et des taux de satisfaction.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-visual">
+                <h3>2. Articulation avec l'analyse spatiale et les indices spectraux (présentés précédemment)</h3>
+                <p>Comme l'a démontré notre bilan global, <strong>l'irrigation agricole gouverne près de 88 % de la demande en eau d'Ifrane</strong>. L'affinement après-sommet reposera donc sur la convergence entre nos canevas statistiques et <strong>les travaux de télédétection (Sentinel-2) et d'indices spectraux (NDVI, NDWI) exposés dans la partie précédente de cette présentation</strong> :</p>
+
+                <ul class="clean-list">
+                    <li><strong>1. Affiner la résolution spatiale des superficies irriguées :</strong> Croiser les superficies communales déclarées dans nos canevas (15 470 ha à 18 678 ha) avec la détection parcellaire mensuelle issue des images satellitaires Sentinel-2 (résolution 10 m).</li>
+                    <li><strong>2. Calibrer dynamiquement les coefficients culturaux ($K_c$) et l'ET réelle :</strong> Utiliser les séries temporelles d'indices de végétation (NDVI) présentées précédemment pour ajuster les stades phénologiques commune par commune selon l'altitude.</li>
+                    <li><strong>3. Objectiver le taux de satisfaction estival ($\tau_{\text{sat}}$) lors des années sèches :</strong> Détecter par les indices de stress hydrique (NDWI) les parcelles réellement soumises au rationnement estival (fixé à 50 % dans notre scénario macro).</li>
+                </ul>
+
+                <div class="math-block" style="border-left-color:#15803d; margin-top:14px;">
+                    <div class="math-label" style="color:#15803d;">Feuille de route finale vers la simulation STRATEAU complète</div>
+                    <strong>Canevas STRATEAU remplis (Statistiques & FAO-56)</strong> $+$ <strong>Retours des courriers officiels (ONEE / ABHS)</strong> $+$ <strong>Couplage avec la Télédétection & Indices Spectraux</strong> $\Longrightarrow$ <strong>Exécution calibrée de STRATEAU et simulation des scénarios à l'horizon 2030</strong>.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>Projet Pilote STRATEAU Ifrane — Conclusion Générale, Courriers Officiels & Couplage Télédétection</span>
+            <span>19 / 19</span>
+        </div>
+    </section>
+<!-- ================================================================= -->
+    <!-- SCRIPT : LIGHTBOX PHOTO + ZOOM BLOCS HTML + ANIMATION ECHARTS     -->
+    <!-- ================================================================= -->
+    <script>
+        // 1. ZOOM PLEIN ÉCRAN AU CLIC SUR LES PHOTOS, CARTES DE CANEVAS ET BLOCS HTML (SLIDE 02)
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxHtml = document.getElementById('lightbox-html');
+        const lightboxCap = document.getElementById('lightbox-cap');
+
+        function openDirectLightbox(src, caption) {
+            lightboxHtml.style.display = 'none';
+            lightboxImg.style.display = 'block';
+            lightboxImg.src = src;
+            lightboxCap.textContent = caption || '';
+            lightbox.classList.add('open');
+        }
+
+        function openHtmlLightbox(element, caption) {
+            lightboxImg.style.display = 'none';
+            lightboxHtml.style.display = 'block';
+            lightboxHtml.innerHTML = element.innerHTML;
+            lightboxCap.textContent = caption || '';
+            lightbox.classList.add('open');
+        }
+
+        document.querySelectorAll('figure.asset-figure').forEach(fig => {
+            const img = fig.querySelector('img.zoomable');
+            const hint = fig.querySelector('.zoom-hint');
+            const openFn = (e) => {
+                e.stopPropagation();
+                openDirectLightbox(img.src, img.alt || '');
+            };
+            if (img) img.addEventListener('click', openFn);
+            if (hint) hint.addEventListener('click', openFn);
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+        }
+
+        // 2. NAVIGATION AUTOMATIQUE ENTRE LES 19 DIAPOSITIVES
+        const slides = document.querySelectorAll('.slide');
+        const pageIndex = document.getElementById('pageIndex');
+
+        slides.forEach((s, i) => {
+            s.setAttribute('data-slide', i);
+            const tick = document.createElement('div');
+            tick.className = 'page-tick' + (i === 0 ? ' active' : '');
+            tick.onclick = () => s.scrollIntoView({ behavior: 'smooth' });
+            pageIndex.appendChild(tick);
+        });
+        const ticks = document.querySelectorAll('.page-tick');
+
+        let activeIdx = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                return;
+            }
+            if (lightbox.classList.contains('open')) return;
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
+                e.preventDefault();
+                activeIdx = Math.min(slides.length - 1, activeIdx + 1);
+                slides[activeIdx].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                activeIdx = Math.max(0, activeIdx - 1);
+                slides[activeIdx].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // 3. CONFIGURATIONS DES GRAPHIQUES ANALYTIQUES MULTI-VARIABLES
+        const fontFamily = "'Plus Jakarta Sans', sans-serif";
+        const chartInstances = {};
+
+        const chartConfigs = {
+            // DIAPO 03 : UNIQUEMENT LES FEUILLES DU CANEVAS STRATEAU AGRICOLE & CHEPTEL (HORS CALCULS INTERMÉDIAIRES !)
+            'chart-effort-canevas': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2600,
+                legend: { top: 4, left: 'center', itemGap: 16, textStyle: { fontSize: 11.5, fontWeight: 600, color: '#111111' }, data: ['Nombre de Lignes du Canevas (Axe G)', 'Valeurs Renseignées dans le Canevas (Axe D)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 52, left: 62, right: 68 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 16, fontSize: 10.5, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: [
+                        'C_Feuil5\n(Satisfaction)',
+                        'C_Feuil1\n(Déterminants)',
+                        'C_Feuil1_Irrig\n(Variante Irrig.)',
+                        'C_Feuil4\n(Irrigation)',
+                        'C_Feuil4_100\n(Variante 100%)',
+                        'Feuil3_Climat\n(Pluie & ETP)',
+                        'Canevas Cheptel\n(3 Espèces 10×10)',
+                        'C_Feuil2\n(Paramètres Kc)'
+                    ]
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 2600,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: (v) => v.toLocaleString('fr-FR') + ' l.' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 16000,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: (v) => (v / 1000) + 'k val.' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Nombre de Lignes du Canevas (Axe G)', type: 'bar', yAxisIndex: 0, barWidth: '42%', label: { show: true, position: 'top', fontSize: 10, fontWeight: 700, color: '#111111' }, data: [2280, 2000, 1900, 1200, 1200, 960, 300, 20], itemStyle: { color: '#15803d' } },
+                    { name: 'Valeurs Renseignées dans le Canevas (Axe D)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [13680, 14000, 13300, 13201, 13200, 6727, 2100, 269] }
+                ]
+            },
+
+            // DIAPO 06 (FARAH ETP) : LES 10 COURBES MENSUELLES EXACTES GÉNÉRÉES DEPUIS SON FICHIER EXCEL (ET0_TerraClimate_Ifrane_2017_2024_mis_en_forme.xlsx)
+            'chart-farah-etp': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: {
+                    top: 2,
+                    left: 'center',
+                    itemGap: 10,
+                    textStyle: { fontSize: 10.5, fontWeight: 600, color: '#111111' },
+                    data: ['Tigrigra', 'Azrou', 'Tizguite', 'Sidi El Makhfi', 'Oued Ifrane', 'Ain Leuh', 'Ben Smim', 'Ifrane', 'Dayat Aoua', 'Timahdite']
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    valueFormatter: (v) => v + ' mm/mois'
+                },
+                grid: { top: 56, bottom: 38, left: 55, right: 25 },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLabel: { interval: 0, fontSize: 11.5, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc']
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 20,
+                    max: 240,
+                    axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} mm' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    splitLine: { lineStyle: { color: '#eeeeee' } }
+                },
+                series: [
+                    { name: 'Tigrigra', type: 'line', smooth: true, symbolSize: 7, lineStyle: { width: 3.2, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [50.52, 63.17, 94.16, 125.08, 164.61, 184.11, 222.66, 208.65, 156.09, 110.86, 70.16, 50.81] },
+                    { name: 'Azrou', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2.8, color: '#111111' }, itemStyle: { color: '#111111' }, data: [50.37, 62.45, 91.72, 122.38, 160.48, 182.99, 219.72, 203.49, 153.6, 106.11, 68.65, 49.93] },
+                    { name: 'Tizguite', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, color: '#c2410c' }, itemStyle: { color: '#c2410c' }, data: [49.37, 61.28, 90.75, 122.87, 159.47, 179.87, 218.63, 202.97, 151.4, 104.82, 67.44, 49.5] },
+                    { name: 'Sidi El Makhfi', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, color: '#d97706' }, itemStyle: { color: '#d97706' }, data: [42.75, 58.81, 91.33, 120.84, 159.83, 181.35, 216.91, 201.11, 151.19, 106.49, 68.12, 48.38] },
+                    { name: 'Oued Ifrane', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, color: '#6d28d9' }, itemStyle: { color: '#6d28d9' }, data: [40.56, 57.53, 89.78, 118.75, 157.72, 180.38, 215.51, 196.21, 148.65, 104.46, 67.27, 47.57] },
+                    { name: 'Ain Leuh', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, color: '#4f46e5' }, itemStyle: { color: '#4f46e5' }, data: [42.52, 57.64, 88.9, 118.53, 155.49, 177.2, 213.46, 196.8, 148.51, 102.73, 66.61, 47.78] },
+                    { name: 'Ben Smim', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, type: 'dashed', color: '#0f766e' }, itemStyle: { color: '#0f766e' }, data: [44.91, 58.72, 87.45, 117.66, 153.09, 174.84, 212.85, 196.95, 148.09, 101.55, 66.06, 47.73] },
+                    { name: 'Ifrane', type: 'line', smooth: true, symbolSize: 6, lineStyle: { width: 2.5, color: '#0369a1' }, itemStyle: { color: '#0369a1' }, data: [44.75, 58.02, 85.72, 115.91, 150.53, 171.8, 211.25, 193.05, 146.17, 98.74, 65.05, 47.58] },
+                    { name: 'Dayat Aoua', type: 'line', smooth: true, symbolSize: 5, lineStyle: { width: 2, type: 'dashed', color: '#64748b' }, itemStyle: { color: '#64748b' }, data: [44.19, 57.5, 86.18, 116.77, 151.34, 170.59, 207.11, 193.11, 144.26, 98.76, 64.57, 47.22] },
+                    { name: 'Timahdite', type: 'line', smooth: true, symbolSize: 7, lineStyle: { width: 3.2, color: '#15803d' }, itemStyle: { color: '#15803d' }, areaStyle: { opacity: 0.08, color: '#15803d' }, data: [35.18, 52.88, 86.11, 115.34, 151.6, 172.67, 203.62, 191.11, 144.16, 98.96, 64.0, 44.38] }
+                ]
+            },
+
+            // DIAPO 07 (TON GRAPHIQUE INTACT) : Croisement Inter-Annuel (2016-2026)
+            'chart-surfaces-croise': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2600,
+                animationEasing: 'cubicOut',
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11.5, fontWeight: 600, color: '#111111' }, data: ['Céréales (ha)', 'Fourrages Totaux (ha)', 'Pommier Irrigué (ha)', 'Prunier + Cerisier (ha)', 'Maraîchage Irrigué (ha)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 38, left: 62, right: 62 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25', '2025-26']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 55000,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: (v) => (v / 1000) + 'k ha' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 7500,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: (v) => v + ' ha' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Céréales (ha)', type: 'bar', yAxisIndex: 0, data: [44200, 45100, 42800, 39500, 50900, 43627, 36353, 31292, 31600, 31943], itemStyle: { color: '#d4d4d8' } },
+                    { name: 'Fourrages Totaux (ha)', type: 'bar', yAxisIndex: 0, data: [12400, 12650, 12900, 13100, 13400, 13550, 13700, 13850, 13900, 14020], itemStyle: { color: '#71717a' } },
+                    { name: 'Pommier Irrigué (ha)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 7, lineStyle: { width: 3.5, color: '#111111' }, itemStyle: { color: '#111111' }, data: [5550, 5680, 5810, 5940, 6070, 6200, 6452, 6510, 6560, 6609] },
+                    { name: 'Prunier + Cerisier (ha)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 2.5, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [2500, 2580, 2660, 2730, 2810, 2870, 2968, 3010, 3060, 3105] },
+                    { name: 'Maraîchage Irrigué (ha)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 2.5, type: 'dashed', color: '#0369a1' }, itemStyle: { color: '#0369a1' }, data: [1120, 1150, 1190, 1210, 1250, 1290, 1340, 1390, 1440, 1482] }
+                ]
+            },
+
+            // DIAPO 08 (TON GRAPHIQUE INTACT) : Quelles cultures consomment le plus d'eau ?
+            'chart-top-cultures': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 16, textStyle: { fontSize: 11.5, fontWeight: 600, color: '#111111' }, data: ['Besoin Net Total (Mm³/an)', 'Besoin Brut Total (Mm³/an)', 'Consommation Unitaire par Hectare (m³/ha/an)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 52, left: 55, right: 68 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 22, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Pommier', 'Pomme de terre', 'Prunier', 'Maïs irrigué', 'Cerisier', 'Oignon', 'Autres fourrages', 'Olivier', 'Pêcher / Nect.', 'Poirier']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 38,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 10000,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: '{value} m³/ha' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Besoin Net Total (Mm³/an)', type: 'bar', yAxisIndex: 0, data: [26.89, 6.54, 6.01, 5.41, 4.69, 4.14, 4.05, 3.19, 1.59, 0.96], itemStyle: { color: '#111111' } },
+                    { name: 'Besoin Brut Total (Mm³/an)', type: 'bar', yAxisIndex: 0, data: [34.60, 8.58, 7.73, 7.58, 6.03, 5.43, 5.68, 4.10, 2.04, 1.24], itemStyle: { color: '#a1a1aa' } },
+                    { name: 'Consommation Unitaire par Hectare (m³/ha/an)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [4070, 9080, 3450, 4730, 3440, 8690, 5870, 2480, 5260, 4440] }
+                ]
+            },
+
+            // DIAPO 09 (TON GRAPHIQUE INTACT) : Croisement Climat et Kc
+            'chart-climat-kc': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 3000,
+                legend: { top: 4, left: 'center', itemGap: 12, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Pluie efficace Peff (mm)', 'ET0 TerraClimate (mm)', 'ETc Pommier (mm)', 'ETc Luzerne FAO (mm)', 'ETc Orge d\'hiver DPA (mm)'] },
+                tooltip: { trigger: 'axis', valueFormatter: (v) => v + ' mm' },
+                grid: { top: 48, bottom: 38, left: 55, right: 55 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 11.5, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 200,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} mm' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 200,
+                        axisLabel: { color: '#991b1b', fontSize: 11, formatter: '{value} mm' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Pluie efficace Peff (mm)', type: 'bar', yAxisIndex: 0, data: [71, 67, 73, 64, 40, 15, 6, 9, 27, 53, 78, 76], itemStyle: { color: '#cbd5e1' } },
+                    { name: 'ET0 TerraClimate (mm)', type: 'bar', yAxisIndex: 0, data: [42, 54, 82, 106, 138, 166, 182, 171, 128, 88, 52, 39], itemStyle: { color: '#e4e4e7' } },
+                    { name: 'ETc Pommier (mm)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 3, color: '#111111' }, itemStyle: { color: '#111111' }, data: [21, 27, 57, 85, 124, 158, 173, 162, 109, 62, 26, 19] },
+                    { name: 'ETc Luzerne FAO (mm)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 2.5, type: 'dashed', color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [20, 30, 50, 80, 120, 150, 180, 170, 130, 80, 40, 20] },
+                    { name: 'ETc Orge d\'hiver DPA (mm)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 3.5, color: '#15803d' }, itemStyle: { color: '#15803d' }, areaStyle: { opacity: 0.12, color: '#15803d' }, data: [35, 52, 86, 105, 55, 0, 0, 0, 0, 0, 25, 30] }
+                ]
+            },
+
+            // DIAPO 10 (TON GRAPHIQUE INTACT) : Bilan Mensuel Multi-Filières Empilé + Rationnement Estival
+            'chart-mensuel-komplexe': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 12, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Arboriculture Net', 'Maraîchage Net', 'Fourrages & Maïs Net', 'Brut Théorique 100 %', 'Brut Réel Rationné (50 % Été)'] },
+                tooltip: { trigger: 'axis', valueFormatter: (v) => v + ' Mm³' },
+                grid: { top: 48, bottom: 38, left: 55, right: 55 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 11.5, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 25,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 25,
+                        axisLabel: { color: '#991b1b', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Arboriculture Net', type: 'bar', stack: 'net', yAxisIndex: 0, data: [0.00, 0.00, 0.14, 1.05, 3.65, 7.62, 11.45, 10.60, 5.65, 1.95, 0.26, 0.00], itemStyle: { color: '#111111' } },
+                    { name: 'Maraîchage Net', type: 'bar', stack: 'net', yAxisIndex: 0, data: [0.00, 0.00, 0.05, 0.28, 1.02, 2.38, 3.62, 3.18, 1.72, 0.65, 0.09, 0.00], itemStyle: { color: '#0369a1' } },
+                    { name: 'Fourrages & Maïs Net', type: 'bar', stack: 'net', yAxisIndex: 0, data: [0.00, 0.01, 0.18, 0.40, 0.84, 1.94, 2.60, 1.96, 1.34, 0.59, 0.04, 0.00], itemStyle: { color: '#a1a1aa' } },
+                    { name: 'Brut Théorique 100 %', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 7, lineStyle: { width: 2.5, type: 'dashed', color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [0.00, 0.01, 0.48, 2.26, 7.21, 15.63, 23.13, 20.61, 11.40, 4.18, 0.51, 0.00] },
+                    { name: 'Brut Réel Rationné (50 % Été)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#15803d' }, itemStyle: { color: '#15803d' }, data: [0.00, 0.01, 0.48, 2.26, 7.21, 15.63, 13.20, 11.58, 6.09, 4.18, 0.51, 0.00] }
+                ]
+            },
+
+            // DIAPO 11 (TON GRAPHIQUE INTACT) : Comparaison des 10 Communes (Irrigation vs Surfaces)
+            'chart-communes-irrigation': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Besoin Net (Mm³/an)', 'Besoin Brut (Mm³/an)', 'Surface Cultivée Totale (ha)', 'Surface Irriguée (ha)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 50, left: 55, right: 65 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 20, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Tigrigra', 'Sidi El Makhfi', 'Dayat Aoua', 'Oued Ifrane', 'Ain Leuh', 'Tizguite', 'Timahdite', 'Ben Smim', 'Ifrane', 'Azrou']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 25,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 20000,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: (v) => (v / 1000) + 'k ha' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Besoin Net (Mm³/an)', type: 'bar', yAxisIndex: 0, data: [17.05, 13.07, 8.25, 8.00, 6.40, 4.75, 3.97, 3.74, 0.00, 0.00], itemStyle: { color: '#111111' } },
+                    { name: 'Besoin Brut (Mm³/an)', type: 'bar', yAxisIndex: 0, data: [22.19, 16.96, 10.67, 10.69, 8.27, 6.32, 5.49, 4.84, 0.00, 0.00], itemStyle: { color: '#a1a1aa' } },
+                    { name: 'Surface Cultivée Totale (ha)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 7, lineStyle: { width: 2.5, type: 'dashed', color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [14388, 18424, 2504, 9972, 6226, 4885, 12204, 3229, 0, 0] },
+                    { name: 'Surface Irriguée (ha)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3, color: '#0369a1' }, itemStyle: { color: '#0369a1' }, data: [3928, 3108, 1948, 1854, 1587, 1135, 822, 1088, 0, 0] }
+                ]
+            },
+
+            // DIAPO 12 : Analyse Communale du Cheptel (3 Espèces : Ovins, Caprins, Bovins)
+            'chart-cheptel-communes': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Ovins (Têtes)', 'Caprins (Têtes)', 'Bovins (Têtes)', 'Eau d\'Abreuvement Consommée (m³/an)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 50, left: 62, right: 68 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 20, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Timahdite', 'Ain Leuh', 'Oued Ifrane', 'Sidi El Makhfi', 'Tigrigra', 'Tizguite', 'Ifrane', 'Dayat Aoua', 'Ben Smim', 'Azrou']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 220000,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: (v) => (v / 1000) + 'k' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 450000,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: (v) => (v / 1000) + 'k m³' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Ovins (Têtes)', type: 'bar', stack: 'cheptel', yAxisIndex: 0, data: [190500, 96500, 85200, 73000, 43000, 26000, 25279, 10000, 6600, 0], itemStyle: { color: '#111111' } },
+                    { name: 'Caprins (Têtes)', type: 'bar', stack: 'cheptel', yAxisIndex: 0, data: [12400, 11200, 8900, 7500, 3800, 2900, 873, 900, 600, 0], itemStyle: { color: '#71717a' } },
+                    { name: 'Bovins (Têtes)', type: 'bar', stack: 'cheptel', yAxisIndex: 0, data: [3850, 3920, 3600, 3100, 3200, 1650, 1399, 620, 519, 0], itemStyle: { color: '#0369a1' } },
+                    { name: 'Eau d\'Abreuvement Consommée (m³/an)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [422000, 249700, 221000, 189400, 130700, 75800, 67800, 28600, 20500, 0] }
+                ]
+            },
+
+            // -----------------------------------------------------------------
+            // VOLET II : POPULATION, AEPI, INDUSTRIE, TERTIAIRE & TOURISME
+            // -----------------------------------------------------------------
+
+            // DIAPO 13 : Population Urbaine/Rurale (Barres) + Enveloppe AEPI du PDAIRE (Courbe Rouge Mm3/an)
+            'chart-population-communes': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2600,
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Population Urbaine / Centres (Hab.)', 'Population Rurale (Hab.)', 'AEPI PDAIRE 2025–26 (Mm³/an)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 52, left: 60, right: 58 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 20, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Azrou', 'Sidi El Makhfi', 'Ifrane', 'Tizguite', 'Dayat Aoua', 'Timahdite', 'Oued Ifrane', 'Tigrigra', 'Ain Leuh', 'Ben Smim']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 62000,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: (v) => (v / 1000) + 'k' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 3.2,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Population Urbaine / Centres (Hab.)', type: 'bar', stack: 'pop', yAxisIndex: 0, barWidth: '44%', data: [58193, 5164, 13867, 0, 0, 4762, 2920, 0, 4745, 0], itemStyle: { color: '#0369a1' } },
+                    { name: 'Population Rurale (Hab.)', type: 'bar', stack: 'pop', yAxisIndex: 0, data: [0, 11260, 0, 12452, 12422, 6931, 7272, 9950, 4146, 7869], itemStyle: { color: '#111111' } },
+                    { name: 'AEPI PDAIRE 2025–26 (Mm³/an)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [2.90, 0.52, 2.00, 0.30, 0.22, 0.40, 0.28, 0.30, 0.30, 0.42] }
+                ]
+            },
+
+            // DIAPO 14 : Déterminants Croisés : Nuitées Ventilées (Barres) + Emplois Totaux (Courbes)
+            'chart-tourisme-determinants': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 12, textStyle: { fontSize: 10.5, fontWeight: 600, color: '#111111' }, data: ['Nuitées Ifrane (42,7 %)', 'Nuitées Ben Smim (42,0 %)', 'Nuitées 8 Autres (15,3 %)', 'Emplois Tertiaires + Industriels (Axe D)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 38, left: 62, right: 62 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    data: ['2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25', '2025-26'],
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } }
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 310000,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: (v) => (v / 1000) + 'k' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 6500,
+                        max: 7500,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: '{value} emp.' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Nuitées Ifrane (42,7 %)', type: 'bar', stack: 'nuit', yAxisIndex: 0, barWidth: '44%', data: [74344, 72529, 68270, 40633, 56445, 62146, 101966, 107482, 113297, 119426], itemStyle: { color: '#6d28d9' } },
+                    { name: 'Nuitées Ben Smim (42,0 %)', type: 'bar', stack: 'nuit', yAxisIndex: 0, data: [73121, 71336, 67147, 39965, 55517, 61124, 100288, 105714, 111433, 117461], itemStyle: { color: '#111111' } },
+                    { name: 'Nuitées 8 Autres (15,3 %)', type: 'bar', stack: 'nuit', yAxisIndex: 0, data: [26584, 25927, 24405, 14530, 20182, 22221, 36460, 38432, 40511, 42704], itemStyle: { color: '#a1a1aa' } },
+                    { name: 'Emplois Tertiaires + Industriels (Axe D)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [6987, 7014, 7045, 7078, 7110, 7140, 7172, 7205, 7238, 7272] }
+                ]
+            },
+
+            // DIAPO 15 : UNIQUEMENT LES 4 CANEVAS STRATEAU DU VOLET II (HORS FEUILLES DE CALCUL INTERMÉDIAIRE !)
+            'chart-aep-globale': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2400,
+                legend: { top: 0, left: 'center', itemGap: 16, textStyle: { fontSize: 10.5, fontWeight: 600, color: '#111111' }, data: ['Lignes du Canevas (Déterminants + BU)', 'Valeurs Renseignées dans le Canevas'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 32, bottom: 35, left: 50, right: 55 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 10.5, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['1. Canevas Eau Potable\n(C_AEP_Det + BU)', '2. Canevas Industrie\n(C_Ind_Det + BU)', '3. Canevas Tertiaire\n(C_Tert_Det + BU)', '4. Canevas Tourisme\n(C_Tour_Det + BU)']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 180,
+                        axisLabel: { color: '#111111', fontSize: 10, formatter: '{value} l.' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 1200,
+                        axisLabel: { color: '#991b1b', fontSize: 10, fontWeight: 600, formatter: '{value} val.' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Lignes du Canevas (Déterminants + BU)', type: 'bar', yAxisIndex: 0, barWidth: '38%', label: { show: true, position: 'top', formatter: '{c} lignes', fontSize: 10, fontWeight: 700, color: '#111111' }, data: [142, 142, 142, 142], itemStyle: { color: '#0369a1' } },
+                    { name: 'Valeurs Renseignées dans le Canevas', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 7, lineStyle: { width: 3, color: '#b91c1c' }, itemStyle: { color: '#b91c1c' }, data: [1045, 944, 944, 944] }
+                ]
+            },
+
+            // DIAPO 16 : Azrou, Ben Smim et Ifrane portent 85 % du besoin des trois secteurs (en 10^3 m3/an + % AEP)
+            'chart-indus-tertiaire-communes': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Tertiaire (10³ m³)', 'Industrie (10³ m³)', 'Tourisme (10³ m³)', 'Part dans l\'AEP Communale (%)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 52, left: 58, right: 58 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 22, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    data: ['Azrou', 'Ben Smim', 'Ifrane', 'Tigrigra', 'Sidi El Makhfi', 'Ain Leuh', 'Timahdite', 'Oued Ifrane', 'Tizguite', 'Dayat Aoua'],
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } }
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 85,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value}k m³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 13,
+                        axisLabel: { color: '#991b1b', fontSize: 11, fontWeight: 600, formatter: '{value} %' },
+                        axisLine: { show: true, lineStyle: { color: '#b91c1c', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Tertiaire (10³ m³)', type: 'bar', stack: 'sec', yAxisIndex: 0, barWidth: '44%', data: [31.0, 3.1, 12.9, 1.2, 2.9, 2.2, 2.3, 1.2, 0.9, 1.1], itemStyle: { color: '#0369a1' } },
+                    { name: 'Industrie (10³ m³)', type: 'bar', stack: 'sec', yAxisIndex: 0, data: [42.7, 15.0, 4.7, 1.7, 2.5, 2.2, 1.6, 1.8, 0.9, 0.2], itemStyle: { color: '#b91c1c' } },
+                    { name: 'Tourisme (10³ m³)', type: 'bar', stack: 'sec', yAxisIndex: 0, data: [3.9, 29.4, 29.9, 3.2, 0.3, 1.2, 0.5, 0.7, 0.4, 0.6], itemStyle: { color: '#6d28d9' } },
+                    { name: 'Part dans l\'AEP Communale (%)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3, color: '#111111' }, itemStyle: { color: '#111111' }, data: [2.7, 11.3, 2.4, 2.0, 1.1, 1.9, 1.1, 1.3, 0.7, 0.9] }
+                ]
+            },
+
+            // DIAPO 17 : Graphique Combiné : Volumes par Secteur (Barres) + Indice Base 100 (Courbes)
+            'chart-comparaison-finale': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 2800,
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                legend: { top: 4, left: 'center', itemGap: 12, textStyle: { fontSize: 10.5, fontWeight: 600, color: '#111111' }, data: ['Industrie (Mm³)', 'Tourisme (Mm³)', 'Tertiaire (Mm³)', 'Indice Tourisme (+60,6 %)', 'Indice AEPI (+22,3 %)'] },
+                grid: { top: 48, bottom: 38, left: 58, right: 58 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, fontSize: 11.5, fontWeight: 600, color: '#111111' },
+                    data: ['2016-17', '2019-20', '2022-23', '2025-26'],
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } }
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 0.085,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 40,
+                        max: 175,
+                        axisLabel: { color: '#6d28d9', fontSize: 11, fontWeight: 600, formatter: 'Ind. {value}' },
+                        axisLine: { show: true, lineStyle: { color: '#6d28d9', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Industrie (Mm³)', type: 'bar', yAxisIndex: 0, data: [0.0692, 0.0705, 0.0718, 0.0732], itemStyle: { color: '#b91c1c' }, label: { show: true, position: 'top', fontSize: 9.5, fontWeight: 700 } },
+                    { name: 'Tourisme (Mm³)', type: 'bar', yAxisIndex: 0, data: [0.0435, 0.0238, 0.0597, 0.0699], itemStyle: { color: '#6d28d9' }, label: { show: true, position: 'top', fontSize: 9.5, fontWeight: 700 } },
+                    { name: 'Tertiaire (Mm³)', type: 'bar', yAxisIndex: 0, data: [0.0571, 0.0576, 0.0582, 0.0587], itemStyle: { color: '#0369a1' }, label: { show: true, position: 'top', fontSize: 9.5, fontWeight: 700 } },
+                    { name: 'Indice Tourisme (+60,6 %)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3.5, color: '#15803d' }, itemStyle: { color: '#15803d' }, data: [100, 54.7, 137.2, 160.6] },
+                    { name: 'Indice AEPI (+22,3 %)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 6, lineStyle: { width: 2.5, type: 'dashed', color: '#111111' }, itemStyle: { color: '#111111' }, data: [100, 118.4, 120.3, 122.3] }
+                ]
+            },
+
+            // DIAPO 18 : Synthèse Globale Tous Secteurs par Commune
+            'chart-synthese-tous-secteurs': {
+                backgroundColor: 'transparent',
+                textStyle: { fontFamily: fontFamily, color: '#111111' },
+                animationDuration: 3000,
+                legend: { top: 4, left: 'center', itemGap: 14, textStyle: { fontSize: 11, fontWeight: 600, color: '#111111' }, data: ['Irrigation Agricole Nette (Mm³/an)', 'Abreuvement Cheptel 3 Espèces (Mm³/an)', 'AEPI Totale : Domestique + Ind. + Tour. + Tert. (Mm³/an)', 'Part de l\'Agriculture dans la Commune (%)'] },
+                tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+                grid: { top: 48, bottom: 52, left: 58, right: 58 },
+                xAxis: {
+                    type: 'category',
+                    axisLabel: { interval: 0, rotate: 20, fontSize: 11, fontWeight: 600, color: '#111111' },
+                    axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                    data: ['Tigrigra', 'Sidi El Makhfi', 'Dayat Aoua', 'Oued Ifrane', 'Ain Leuh', 'Tizguite', 'Timahdite', 'Ben Smim', 'Azrou', 'Ifrane']
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 20,
+                        axisLabel: { color: '#111111', fontSize: 11, formatter: '{value} Mm³' },
+                        axisLine: { show: true, lineStyle: { color: '#111111', width: 1.5 } },
+                        splitLine: { lineStyle: { color: '#eeeeee' } }
+                    },
+                    {
+                        type: 'value',
+                        min: 0,
+                        max: 100,
+                        axisLabel: { color: '#15803d', fontSize: 11, fontWeight: 700, formatter: '{value} %' },
+                        axisLine: { show: true, lineStyle: { color: '#15803d', width: 1.5 } },
+                        splitLine: { show: false }
+                    }
+                ],
+                series: [
+                    { name: 'Irrigation Agricole Nette (Mm³/an)', type: 'bar', stack: 'tot', yAxisIndex: 0, barWidth: '46%', data: [17.05, 13.07, 8.25, 8.00, 6.40, 4.75, 3.97, 3.74, 0.00, 0.00], itemStyle: { color: '#15803d' } },
+                    { name: 'Abreuvement Cheptel 3 Espèces (Mm³/an)', type: 'bar', stack: 'tot', yAxisIndex: 0, data: [0.131, 0.189, 0.029, 0.221, 0.250, 0.076, 0.422, 0.021, 0.000, 0.068], itemStyle: { color: '#0369a1' } },
+                    { name: 'AEPI Totale : Domestique + Ind. + Tour. + Tert. (Mm³/an)', type: 'bar', stack: 'tot', yAxisIndex: 0, data: [0.30, 0.52, 0.22, 0.28, 0.30, 0.30, 0.40, 0.42, 2.90, 2.00], itemStyle: { color: '#b91c1c' } },
+                    { name: 'Part de l\'Agriculture dans la Commune (%)', type: 'line', yAxisIndex: 1, smooth: true, symbolSize: 8, lineStyle: { width: 3, color: '#111111' }, itemStyle: { color: '#111111' }, data: [98.3, 96.2, 97.4, 96.7, 95.7, 94.2, 91.7, 90.0, 0.0, 3.3] }
+                ]
+            }
+        };
+
+        // 4. DÉCLENCHEMENT DE L'ANIMATION À L'ENTRÉE SUR LA DIAPOSITIVE (COMPATIBLE PC & TÉLÉPHONE)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = parseInt(entry.target.getAttribute('data-slide'));
+                    activeIdx = idx;
+                    ticks.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+                    const chartEl = entry.target.querySelector('.chart-surface');
+                    if (chartEl && chartConfigs[chartEl.id]) {
+                        const id = chartEl.id;
+                        if (!chartInstances[id]) {
+                            chartInstances[id] = echarts.init(chartEl);
+                        } else {
+                            chartInstances[id].clear();
+                        }
+                        chartInstances[id].setOption(chartConfigs[id], true);
+                    }
+                }
+            });
+        }, { threshold: window.innerWidth <= 960 ? 0.2 : 0.55 });
+
+        slides.forEach(s => observer.observe(s));
+        window.addEventListener('resize', () => Object.values(chartInstances).forEach(c => c.resize()));
+    </script>
+</body>
+</html>
